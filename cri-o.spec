@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.0.0
-Release  : 2
+Release  : 3
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Summary  : Kubelet Container Runtime Interface (CRI) for OCI runtimes.
