@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.0.0
-Release  : 6
+Release  : 7
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Summary  : Kubelet Container Runtime Interface (CRI) for OCI runtimes.
@@ -43,6 +43,7 @@ BuildRequires : pkgconfig(libseccomp)
 BuildRequires : pkgconfig(ostree-1)
 Patch1: 0001-Specify-the-cri-o-symlink-filename.patch
 Patch2: 0002-Fix-path-of-crio.service-s-ExecStart-crio-binary.patch
+Patch3: 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
 
 %description
 The crio package provides an implementation of the
@@ -95,17 +96,18 @@ doc components for the cri-o package.
 %setup -q -n cri-o-1.0.0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1511212602
+export SOURCE_DATE_EPOCH=1512067980
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1511212602
+export SOURCE_DATE_EPOCH=1512067980
 rm -rf %{buildroot}
 %make_install PREFIX=%{buildroot}/usr
 ## make_install_append content
