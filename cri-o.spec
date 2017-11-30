@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.0.0
-Release  : 7
+Release  : 8
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Summary  : Kubelet Container Runtime Interface (CRI) for OCI runtimes.
@@ -103,11 +103,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1512067980
+export SOURCE_DATE_EPOCH=1512073504
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1512067980
+export SOURCE_DATE_EPOCH=1512073504
 rm -rf %{buildroot}
 %make_install PREFIX=%{buildroot}/usr
 ## make_install_append content
