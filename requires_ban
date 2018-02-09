@@ -1,2 +1,20 @@
 # This file contains runtime requirements that get picked up but are
 # undesirable. One entry per line, no whitespace.
+Jinja2
+MarkupSafe
+PyYAML
+ansible
+asn1crypto
+bcrypt
+cffi
+cryptography
+enum34
+idna
+ipaddress
+paramiko
+pip
+pyasn1
+pycparser
+pycrypto
+six
+virtualenv

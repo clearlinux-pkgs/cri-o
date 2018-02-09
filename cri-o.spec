@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.0.0
-Release  : 9
+Release  : 10
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.0.0.tar.gz
 Summary  : Kubelet Container Runtime Interface (CRI) for OCI runtimes.
@@ -14,24 +14,6 @@ Requires: cri-o-bin
 Requires: cri-o-config
 Requires: cri-o-data
 Requires: cri-o-doc
-Requires: Jinja2
-Requires: MarkupSafe
-Requires: PyYAML
-Requires: ansible
-Requires: asn1crypto
-Requires: bcrypt
-Requires: cffi
-Requires: cryptography
-Requires: enum34
-Requires: idna
-Requires: ipaddress
-Requires: paramiko
-Requires: pip
-Requires: pyasn1
-Requires: pycparser
-Requires: pycrypto
-Requires: six
-Requires: virtualenv
 BuildRequires : go
 BuildRequires : golang-github-cpuguy83-go-md2man
 BuildRequires : gpgme-dev
@@ -103,11 +85,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1512073504
-make V=1  %{?_smp_mflags}
+export SOURCE_DATE_EPOCH=1518193154
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1512073504
+export SOURCE_DATE_EPOCH=1518193154
 rm -rf %{buildroot}
 %make_install PREFIX=%{buildroot}/usr
 ## make_install_append content
