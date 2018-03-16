@@ -1,3 +1,4 @@
 0001-Specify-the-cri-o-symlink-filename.patch
 0002-Fix-path-of-crio.service-s-ExecStart-crio-binary.patch
 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
+0004-Add-bin-subfolder.patch
