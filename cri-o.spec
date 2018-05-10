@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.9.9
-Release  : 11
+Release  : 12
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.9.9.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.9.9.tar.gz
 Summary  : No detailed summary available
