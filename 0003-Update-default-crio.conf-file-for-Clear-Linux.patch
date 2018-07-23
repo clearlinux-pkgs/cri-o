@@ -1,21 +1,23 @@
-From fda8bb5d253c1a14acd7ba47cdf710b06d91ecc6 Mon Sep 17 00:00:00 2001
+From 7b03c529c47ab355c15c1420baba182e609587ab Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Fri, 16 Mar 2018 18:30:24 +0000
-Subject: [PATCH 3/3] Update default crio.conf file for Clear Linux
+Date: Mon, 23 Jul 2018 09:53:40 -0500
+Subject: [PATCH 1/2] Update default crio.conf file for Clear Linux
 
 Update paths to conmon and cni plugins to reflect where they are
 intended to be used from Clear Linux. Update configuration to use
 Clear Containers as the untrusted workload handler and that untrusted
 workloads are the default workload type.
+
+Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
- Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
+ Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index c1e098f..8a4dfef 100644
+index f30cfef..81e5328 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -86,6 +86,11 @@ crio: .gopathok $(shell hack/find-godeps.sh $(GOPKGDIR) cmd/crio $(PROJECT))
+@@ -89,6 +89,10 @@ crio: .gopathok $(shell hack/find-godeps.sh $(GOPKGDIR) cmd/crio $(PROJECT))
  
  crio.conf: crio
  	./bin/crio --config="" config --default > crio.conf
@@ -23,10 +25,9 @@ index c1e098f..8a4dfef 100644
 +	sed -i 's|^\(plugin_dir = \).*|\1"/etc/cni/bin/"|' crio.conf
 +	sed -i 's|^\(runtime_untrusted_workload = \).*|\1"/usr/bin/cc-runtime"|' crio.conf
 +	sed -i 's|^\(default_workload_trust = \).*|\1"untrusted"|' crio.conf
-+
  
- clean:
- ifneq ($(GOPATH),)
+ release-note:
+ 	@$(GOPATH)/bin/containerd-release -n $(release)
 -- 
-2.16.2
+2.18.0
 

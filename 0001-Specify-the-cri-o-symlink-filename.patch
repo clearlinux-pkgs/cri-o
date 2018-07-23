@@ -1,27 +1,29 @@
-From a570a630d1494afaa255465a3a319508bc5f96a6 Mon Sep 17 00:00:00 2001
+From 50ffa181b7f24ff3c6f667099cbaf5e12825c0ef Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Fri, 3 Nov 2017 01:03:57 +0000
+Date: Mon, 23 Jul 2018 09:48:09 -0500
 Subject: [PATCH] Specify the cri-o symlink filename
 
 Instead of relying on the current directory name to match cri-o,
 specify cri-o as the symlink filename when setting up.
+
+Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
  Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index ef6129eb..82a35980 100644
+index 50fb9de..f30cfef 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -55,7 +55,7 @@ help:
+@@ -57,7 +57,7 @@ help:
  .gopathok:
  ifeq ("$(wildcard $(GOPKGDIR))","")
  	mkdir -p "$(GOPKGBASEDIR)"
--	ln -s "$(CURDIR)" "$(GOPKGBASEDIR)"
-+	ln -s "$(CURDIR)" "$(GOPKGBASEDIR)/cri-o"
+-	ln -s "$(CURDIR)" "$(GOPKGDIR)"
++	ln -s "$(CURDIR)" "$(GOPKGDIR)/cri-o"
  endif
  	touch "$(GOPATH)/.gopathok"
  
 -- 
-2.14.3
+2.18.0
 

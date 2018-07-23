@@ -1,16 +1,18 @@
-From 55c003eefda6715886771b50691dbe94a05ab101 Mon Sep 17 00:00:00 2001
+From 7ce0d82703768975ddf7ba2071da957012ccf0e2 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Mon, 20 Nov 2017 21:05:16 +0000
-Subject: [PATCH 2/2] Fix path of crio.service's ExecStart crio binary
+Date: Mon, 23 Jul 2018 09:50:52 -0500
+Subject: [PATCH] Fix path of crio.service's ExecStart crio binary
 
 crio is installed in /usr/bin not /usr/local/bin so update the
 crio.service file's ExecStart line to reflect that.
+
+Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
  contrib/systemd/crio.service | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/systemd/crio.service b/contrib/systemd/crio.service
-index 70a3d26b..f937aabe 100644
+index 35d6d42..99724d8 100644
 --- a/contrib/systemd/crio.service
 +++ b/contrib/systemd/crio.service
 @@ -8,7 +8,7 @@ Type=notify
@@ -23,5 +25,5 @@ index 70a3d26b..f937aabe 100644
            $CRIO_NETWORK_OPTIONS
  ExecReload=/bin/kill -s HUP $MAINPID
 -- 
-2.15.0
+2.18.0
 
