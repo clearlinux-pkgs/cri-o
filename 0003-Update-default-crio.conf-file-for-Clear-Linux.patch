@@ -1,7 +1,7 @@
-From 7b03c529c47ab355c15c1420baba182e609587ab Mon Sep 17 00:00:00 2001
+From 1283990f8feccfbbfe10f64d319c53324eeb7bf6 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Mon, 23 Jul 2018 09:53:40 -0500
-Subject: [PATCH 1/2] Update default crio.conf file for Clear Linux
+Date: Fri, 10 Aug 2018 10:39:01 -0500
+Subject: [PATCH 1/2 v2] Update default crio.conf file for Clear Linux
 
 Update paths to conmon and cni plugins to reflect where they are
 intended to be used from Clear Linux. Update configuration to use
@@ -10,21 +10,27 @@ workloads are the default workload type.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
- Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
+
+Notes:
+    Changes in v2: Updated path to seccomp.json and cni plugin directory.
+            This change restores out-of-the-box crio service functionality.
+
+ Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index f30cfef..81e5328 100644
+index 82b8e77..503453e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -89,6 +89,10 @@ crio: .gopathok $(shell hack/find-godeps.sh $(GOPKGDIR) cmd/crio $(PROJECT))
+@@ -95,6 +95,11 @@ bin/crio: .gopathok
  
- crio.conf: crio
+ crio.conf: bin/crio
  	./bin/crio --config="" config --default > crio.conf
 +	sed -i 's|^\(conmon = \).*|\1"/usr/libexec/crio/conmon"|' crio.conf
-+	sed -i 's|^\(plugin_dir = \).*|\1"/etc/cni/bin/"|' crio.conf
++	sed -i 's|^\(plugin_dir = \).*|\1"/usr/libexec/cni/"|' crio.conf
 +	sed -i 's|^\(runtime_untrusted_workload = \).*|\1"/usr/bin/cc-runtime"|' crio.conf
 +	sed -i 's|^\(default_workload_trust = \).*|\1"untrusted"|' crio.conf
++	sed -i 's|^\(seccomp_profile = \).*|\1"/usr/share/defaults/crio/seccomp.json"|' crio.conf
  
  release-note:
  	@$(GOPATH)/bin/containerd-release -n $(release)

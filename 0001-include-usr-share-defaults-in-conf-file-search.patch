@@ -1,0 +1,50 @@
+From a173c2f5d664d53f23ff743162375161487a9c60 Mon Sep 17 00:00:00 2001
+From: Jose Lamego <jose.a.lamego@intel.com>
+Date: Fri, 10 Aug 2018 10:21:06 -0500
+Subject: [PATCH] include /usr/share/defaults in conf file search
+
+crio conf file may not be present in default /etc/crio directory.
+This change includes looking in /usr/share/defaults/crio if
+not found in default location.
+
+Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
+---
+ cmd/crio/main.go | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/cmd/crio/main.go b/cmd/crio/main.go
+index b1ac3a1..d1680ea 100644
+--- a/cmd/crio/main.go
++++ b/cmd/crio/main.go
+@@ -31,6 +31,10 @@ import (
+ // It will be populated by the Makefile.
+ var gitCommit = ""
+ 
++// statelessConfigFile is the path to default configuration file in
++// stateless systems
++var statelessConfigFile = "/usr/share/defaults/crio/crio.conf"
++
+ func validateConfig(config *server.Config) error {
+ 	switch config.ImageVolumes {
+ 	case lib.ImageVolumesMkdir:
+@@ -61,11 +65,16 @@ func mergeConfig(config *server.Config, ctx *cli.Context) error {
+ 			if ctx.GlobalIsSet("config") || !os.IsNotExist(err) {
+ 				return err
+ 			}
+-
+ 			// We don't error out if --config wasn't explicitly set and the
+ 			// default doesn't exist. But we will log a warning about it, so
+ 			// the user doesn't miss it.
+ 			logrus.Warnf("default configuration file does not exist: %s", server.CrioConfigPath)
++			logrus.Warnf("attempting to load configuration file from stateles directory: %s", statelessConfigFile)
++			if err := config.UpdateFromFile(statelessConfigFile); err != nil {
++				if ctx.GlobalIsSet("config") || os.IsNotExist(err) {
++					logrus.Warnf("configuration file at stateles directory does not exist: %s", statelessConfigFile)
++				}
++			}
+ 		}
+ 	}
+ 
+-- 
+2.18.0
+
