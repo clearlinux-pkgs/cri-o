@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.11.1
-Release  : 18
+Release  : 19
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.1.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.1.tar.gz
 Summary  : No detailed summary available
@@ -21,9 +21,10 @@ BuildRequires : gpgme-dev
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : pkgconfig(glib-2.0)
-Patch1: 0002-Fix-path-of-crio.service-s-ExecStart-crio-binary.patch
-Patch2: 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
-Patch3: 0004-Add-bin-subfolder.patch
+Patch1: 0001-include-usr-share-defaults-in-conf-file-search.patch
+Patch2: 0002-Fix-path-of-crio.service-s-ExecStart-crio-binary.patch
+Patch3: 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
+Patch4: 0004-Add-bin-subfolder.patch
 
 %description
 This repository provides supplementary Go time packages.
@@ -86,17 +87,18 @@ man components for the cri-o package.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533739214
+export SOURCE_DATE_EPOCH=1534170223
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1533739214
+export SOURCE_DATE_EPOCH=1534170223
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/cri-o
 cp LICENSE %{buildroot}/usr/share/doc/cri-o/LICENSE
@@ -217,9 +219,9 @@ cp vendor/k8s.io/utils/LICENSE %{buildroot}/usr/share/doc/cri-o/vendor_k8s.io_ut
 ## install_append content
 make install.completions PREFIX=%{buildroot}/usr
 make install.systemd PREFIX=%{buildroot}/usr
-install -D -m 644 crio.conf %{buildroot}/usr/share/cri-o/crio.conf
-install -D -m 644 seccomp.json %{buildroot}/usr/share/cri-o/seccomp.json
-install -D -m 644 crio-umount.conf %{buildroot}/usr/share/cri-o/crio-umount.conf
+install -D -m 644 crio.conf %{buildroot}/usr/share/defaults/crio/crio.conf
+install -D -m 644 seccomp.json %{buildroot}/usr/share/defaults/crio/seccomp.json
+install -D -m 644 crio-umount.conf %{buildroot}/usr/share/defaults/crio/crio-umount.conf
 ## install_append end
 
 %files
@@ -239,9 +241,9 @@ install -D -m 644 crio-umount.conf %{buildroot}/usr/share/cri-o/crio-umount.conf
 
 %files data
 %defattr(-,root,root,-)
-/usr/share/cri-o/crio-umount.conf
-/usr/share/cri-o/crio.conf
-/usr/share/cri-o/seccomp.json
+/usr/share/defaults/crio/crio-umount.conf
+/usr/share/defaults/crio/crio.conf
+/usr/share/defaults/crio/seccomp.json
 
 %files doc
 %defattr(0644,root,root,0755)
