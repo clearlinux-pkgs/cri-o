@@ -1,0 +1,36 @@
+From 45d845dffff41a13467d154f8bb7ebcda0010c15 Mon Sep 17 00:00:00 2001
+From: Jose Lamego <jose.a.lamego@intel.com>
+Date: Thu, 23 Aug 2018 11:47:30 -0500
+Subject: [PATCH] policy.json: add default signature verification policy file
+
+This commit creates a default signature verification policy file
+file to allow image and signature validations.
+
+Fixes clearlinux/distribution#160
+
+Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
+---
+ policy.json | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+ create mode 100644 policy.json
+
+diff --git a/policy.json b/policy.json
+new file mode 100644
+index 0000000..fc643c8
+--- /dev/null
++++ b/policy.json
+@@ -0,0 +1,11 @@
++{
++    "default": [
++        {
++            "type": "insecureAcceptAnything"
++        }
++    ],
++    "transports":
++        {
++            "docker": {}
++        }
++}
+-- 
+2.18.0
+
