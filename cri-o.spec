@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.11.1
-Release  : 22
+Release  : 23
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.1.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.1.tar.gz
 Summary  : No detailed summary available
@@ -96,11 +96,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535061993
+export SOURCE_DATE_EPOCH=1535374682
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1535061993
+export SOURCE_DATE_EPOCH=1535374682
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/cri-o
 cp LICENSE %{buildroot}/usr/share/doc/cri-o/LICENSE
@@ -224,6 +224,7 @@ make install.systemd PREFIX=%{buildroot}/usr
 install -D -m 644 crio.conf %{buildroot}/usr/share/defaults/crio/crio.conf
 install -D -m 644 seccomp.json %{buildroot}/usr/share/defaults/crio/seccomp.json
 install -D -m 644 crio-umount.conf %{buildroot}/usr/share/defaults/crio/crio-umount.conf
+install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 ## install_append end
 
 %files
@@ -245,6 +246,7 @@ install -D -m 644 crio-umount.conf %{buildroot}/usr/share/defaults/crio/crio-umo
 %defattr(-,root,root,-)
 /usr/share/defaults/crio/crio-umount.conf
 /usr/share/defaults/crio/crio.conf
+/usr/share/defaults/crio/policy.json
 /usr/share/defaults/crio/seccomp.json
 
 %files doc
