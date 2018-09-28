@@ -4,23 +4,27 @@
 #
 Name     : cri-o
 Version  : 1.11.5
-Release  : 28
+Release  : 29
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.5.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.5.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 ISC MIT MPL-2.0-no-copyleft-exception WTFPL
-Requires: cri-o-bin
-Requires: cri-o-config
-Requires: cri-o-data
-Requires: cri-o-man
-Requires: cri-o-license
+Requires: cri-o-bin = %{version}-%{release}
+Requires: cri-o-config = %{version}-%{release}
+Requires: cri-o-data = %{version}-%{release}
+Requires: cri-o-libexec = %{version}-%{release}
+Requires: cri-o-license = %{version}-%{release}
+Requires: cri-o-man = %{version}-%{release}
+BuildRequires : btrfs-progs-dev
 BuildRequires : buildreq-golang
 BuildRequires : golang-github-cpuguy83-go-md2man
 BuildRequires : gpgme-dev
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
+BuildRequires : pkgconfig(devmapper)
 BuildRequires : pkgconfig(glib-2.0)
+BuildRequires : pkgconfig(libseccomp)
 Patch1: 0001-include-usr-share-defaults-in-conf-file-search.patch
 Patch2: 0002-Fix-path-of-crio.service-s-ExecStart-crio-binary.patch
 Patch3: 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
@@ -34,6 +38,7 @@ This repository provides supplementary Go time packages.
 Summary: bin components for the cri-o package.
 Group: Binaries
 Requires: cri-o-data = %{version}-%{release}
+Requires: cri-o-libexec = %{version}-%{release}
 Requires: cri-o-config = %{version}-%{release}
 Requires: cri-o-license = %{version}-%{release}
 Requires: cri-o-man = %{version}-%{release}
@@ -56,6 +61,14 @@ Group: Data
 
 %description data
 data components for the cri-o package.
+
+
+%package libexec
+Summary: libexec components for the cri-o package.
+Group: Default
+
+%description libexec
+libexec components for the cri-o package.
 
 
 %package license
@@ -87,11 +100,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1537907085
+export SOURCE_DATE_EPOCH=1538132636
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1537907085
+export SOURCE_DATE_EPOCH=1538132636
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE
@@ -226,8 +239,6 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/crio
-/usr/libexec/crio/conmon
-/usr/libexec/crio/pause
 
 %files config
 %defattr(-,root,root,-)
@@ -245,6 +256,11 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 /usr/share/package-licenses/cri-o/vendor_github.com_docker_docker_NOTICE
 /usr/share/package-licenses/cri-o/vendor_github.com_kr_pty_License
 /usr/share/package-licenses/cri-o/vendor_github.com_prometheus_client_golang_NOTICE
+
+%files libexec
+%defattr(-,root,root,-)
+/usr/libexec/crio/conmon
+/usr/libexec/crio/pause
 
 %files license
 %defattr(-,root,root,-)

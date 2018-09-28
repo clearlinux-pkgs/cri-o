@@ -2,3 +2,4 @@
 # picked up automatically. One name per line, no whitespace.
 golang-github-cpuguy83-go-md2man
 libassuan-dev
+btrfs-progs-dev
