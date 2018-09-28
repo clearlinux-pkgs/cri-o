@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.11.5
-Release  : 29
+Release  : 30
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.5.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.5.tar.gz
 Summary  : No detailed summary available
@@ -26,7 +26,7 @@ BuildRequires : pkgconfig(devmapper)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libseccomp)
 Patch1: 0001-include-usr-share-defaults-in-conf-file-search.patch
-Patch2: 0002-Fix-path-of-crio.service-s-ExecStart-crio-binary.patch
+Patch2: 0002-allow-limited-restarts-on-failure.patch
 Patch3: 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
 Patch4: 0004-Add-bin-subfolder.patch
 Patch5: 0005-add-default-signature-verification-polic.patch
@@ -100,11 +100,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1538132636
+export SOURCE_DATE_EPOCH=1538146559
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1538132636
+export SOURCE_DATE_EPOCH=1538146559
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE
