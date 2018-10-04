@@ -1,31 +1,30 @@
-From d715d6893c37a14d906e3dab9c4e686935c02e0b Mon Sep 17 00:00:00 2001
+From 5484110e3122efc646456fda8b3ca745e5dc91ae Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Fri, 10 Aug 2018 10:39:01 -0500
-Subject: [PATCH v3 1/2] Update default crio.conf file for Clear Linux
+Date: Thu, 4 Oct 2018 17:05:03 -0500
+Subject: [PATH v4] Update default crio.conf for Clear Linux
 
 Update paths to policy.json, seccomp.json, conmon and cni plugins
 to reflect where they are intended to be used from Clear Linux.
-Add docker.io as image registry.
+Add docker.io as image registry. Set overlay as default storage
+driver.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
 
 Notes:
-    Changes in v3: Leave default value unchanged for untrusted workload handler
-            due to possibility for cri-o package to be delivered without
-            either cc-runtime or kata-runtime. This option ought to be set
-            either during or after installing such runtimes.
-            Add registries and signature policy settings to enable out-of-the-box
-            functionality.
+    Changes in v4: Support for several storage drivers was added,
+            so trying to start crio service without a default produces
+            errors. This change sets overlay as default storage driver
+            in crio.conf
 
- Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
+ Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 82b8e77..e86578d 100644
+index 31d9ca7..b6cf08e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -95,6 +95,11 @@ bin/crio: .gopathok
+@@ -95,6 +95,12 @@ bin/crio: .gopathok
  
  crio.conf: bin/crio
  	./bin/crio --config="" config --default > crio.conf
@@ -34,9 +33,10 @@ index 82b8e77..e86578d 100644
 +	sed -i 's|^\(seccomp_profile = \).*|\1"/usr/share/defaults/crio/seccomp.json"|' crio.conf
 +	sed -i "s|^\(#registries = \[\).*|registries = \[\n\t'docker.io',\n\]|" crio.conf
 +	sed -i 's|^\(signature_policy = \).*|\1"/usr/share/defaults/crio/policy.json"|' crio.conf
++	sed -i 's|^\(#storage_driver = ""\)|storage_driver = "overlay"|' crio.conf
  
  release-note:
  	@$(GOPATH)/bin/containerd-release -n $(release)
 -- 
-2.18.0
+2.19.0
 
