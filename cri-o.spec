@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.11.6
-Release  : 33
+Release  : 35
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.6.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.11.6.tar.gz
 Summary  : No detailed summary available
@@ -66,6 +66,8 @@ data components for the cri-o package.
 %package libexec
 Summary: libexec components for the cri-o package.
 Group: Default
+Requires: cri-o-config = %{version}-%{release}
+Requires: cri-o-license = %{version}-%{release}
 
 %description libexec
 libexec components for the cri-o package.
@@ -100,11 +102,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1538693737
+export SOURCE_DATE_EPOCH=1539247816
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1538693737
+export SOURCE_DATE_EPOCH=1539247816
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE
