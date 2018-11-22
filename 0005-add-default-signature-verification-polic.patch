@@ -1,4 +1,4 @@
-From 45d845dffff41a13467d154f8bb7ebcda0010c15 Mon Sep 17 00:00:00 2001
+From 68d3444ec187aeb39b96b637bb0f905a8022fa2e Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 23 Aug 2018 11:47:30 -0500
 Subject: [PATCH] policy.json: add default signature verification policy file
@@ -32,5 +32,5 @@ index 0000000..fc643c8
 +        }
 +}
 -- 
-2.18.0
+2.19.1
 

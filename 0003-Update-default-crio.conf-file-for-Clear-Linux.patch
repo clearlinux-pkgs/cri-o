@@ -1,4 +1,4 @@
-From bc45946b97a7e4a80e166505e5e31c0e562ebf1b Mon Sep 17 00:00:00 2001
+From dea5998441ec1e78db983a579e583c42dcdccf68 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Thu, 4 Oct 2018 17:05:03 -0500
 Subject: [PATCH] Update default crio.conf for Clear Linux
@@ -10,39 +10,27 @@ driver.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
- Makefile | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ Makefile | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 31d9ca7..ac2766f 100644
+index 509a8e0..4752287 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -93,8 +93,25 @@ test/checkseccomp/checkseccomp: .gopathok $(wildcard test/checkseccomp/*.go)
- bin/crio: .gopathok
- 	$(GO) build -i $(LDFLAGS) -tags "$(BUILDTAGS) containers_image_ostree_stub" -o $@ $(PROJECT)/cmd/crio
+@@ -104,6 +104,13 @@ bin/crio: .gopathok
  
-+
-+define CLEAR_ULIMIT_DEFAULTS
-+
-+# Set default ulimits higher than 4K to allow containers like elastic search to
-+# not crash.
-+default_ulimits = [
-+	"nofile=65536:65536"
-+]
-+endef
-+export CLEAR_ULIMIT_DEFAULTS
  crio.conf: bin/crio
  	./bin/crio --config="" config --default > crio.conf
-+	echo "$$CLEAR_ULIMIT_DEFAULTS" >> crio.conf
++	sed -i 's|^#\(default_ulimits = \[\)|\1\n\t"nofile=65536:65536"\n\]|' crio.conf
 +	sed -i 's|^\(conmon = \).*|\1"/usr/libexec/crio/conmon"|' crio.conf
 +	sed -i 's|^\(plugin_dir = \).*|\1"/usr/libexec/cni/"|' crio.conf
 +	sed -i 's|^\(seccomp_profile = \).*|\1"/usr/share/defaults/crio/seccomp.json"|' crio.conf
-+	sed -i "s|^\(#registries = \[\).*|registries = \[\n\t'docker.io',\n\]|" crio.conf
++	sed -i "s|^#\(registries = \[\).*|\1\n\t'docker.io',\n\]|" crio.conf
 +	sed -i 's|^\(signature_policy = \).*|\1"/usr/share/defaults/crio/policy.json"|' crio.conf
-+	sed -i 's|^\(#storage_driver = ""\)|storage_driver = "overlay"|' crio.conf
++	sed -i 's|^#\(storage_driver = \).*|\1"overlay"|' crio.conf
  
  release-note:
- 	@$(GOPATH)/bin/containerd-release -n $(release)
+ 	@$(GOPATH)/bin/release-tool -n $(release)
 -- 
 2.19.1
 

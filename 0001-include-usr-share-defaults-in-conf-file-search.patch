@@ -1,4 +1,4 @@
-From a173c2f5d664d53f23ff743162375161487a9c60 Mon Sep 17 00:00:00 2001
+From 3936b77f7746c1e687d9b651b613255de4deb6d8 Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Fri, 10 Aug 2018 10:21:06 -0500
 Subject: [PATCH] include /usr/share/defaults in conf file search
@@ -9,14 +9,14 @@ not found in default location.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
- cmd/crio/main.go | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ cmd/crio/main.go | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/cmd/crio/main.go b/cmd/crio/main.go
-index b1ac3a1..d1680ea 100644
+index 6f8d13b..9a7ad4a 100644
 --- a/cmd/crio/main.go
 +++ b/cmd/crio/main.go
-@@ -31,6 +31,10 @@ import (
+@@ -37,6 +37,10 @@ import (
  // It will be populated by the Makefile.
  var gitCommit = ""
  
@@ -24,15 +24,10 @@ index b1ac3a1..d1680ea 100644
 +// stateless systems
 +var statelessConfigFile = "/usr/share/defaults/crio/crio.conf"
 +
- func validateConfig(config *server.Config) error {
- 	switch config.ImageVolumes {
- 	case lib.ImageVolumesMkdir:
-@@ -61,11 +65,16 @@ func mergeConfig(config *server.Config, ctx *cli.Context) error {
- 			if ctx.GlobalIsSet("config") || !os.IsNotExist(err) {
- 				return err
- 			}
--
- 			// We don't error out if --config wasn't explicitly set and the
+ var deprecatedRuntimeMsg = `
+ /*\ Warning /*\
+ DEPRECATED: Use Runtimes instead.
+@@ -125,6 +129,12 @@ func mergeConfig(config *server.Config, ctx *cli.Context) error {
  			// default doesn't exist. But we will log a warning about it, so
  			// the user doesn't miss it.
  			logrus.Warnf("default configuration file does not exist: %s", server.CrioConfigPath)
@@ -46,5 +41,5 @@ index b1ac3a1..d1680ea 100644
  	}
  
 -- 
-2.18.0
+2.19.1
 

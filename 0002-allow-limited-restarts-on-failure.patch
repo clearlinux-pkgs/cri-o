@@ -1,4 +1,4 @@
-From ab8320ee16247de0e406fcec548111dcee76102f Mon Sep 17 00:00:00 2001
+From eaed6cc7881b5775085a8b33d854f01643c7c389 Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 27 Sep 2018 17:46:51 -0500
 Subject: [PATCH] crio.service: allow limited restarts on failure
@@ -50,5 +50,5 @@ index 184aef2..eca940c 100644
  [Install]
  WantedBy=multi-user.target
 -- 
-2.19.0
+2.19.1
 
