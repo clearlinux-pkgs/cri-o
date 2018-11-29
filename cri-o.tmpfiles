@@ -1,1 +1,3 @@
+d /opt/ 0700 - - - -
+d /opt/bin 0700 - - - -
 d /opt/bin/cni 0700 - - - -
