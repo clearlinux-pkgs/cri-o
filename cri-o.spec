@@ -4,13 +4,15 @@
 #
 Name     : cri-o
 Version  : 1.12.3
-Release  : 41
+Release  : 42
 URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.12.3.tar.gz
 Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.12.3.tar.gz
+Source1  : cri-o.tmpfiles
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC-BY-SA-4.0 ISC MIT MPL-2.0-no-copyleft-exception WTFPL
 Requires: cri-o-bin = %{version}-%{release}
+Requires: cri-o-config = %{version}-%{release}
 Requires: cri-o-data = %{version}-%{release}
 Requires: cri-o-libexec = %{version}-%{release}
 Requires: cri-o-license = %{version}-%{release}
@@ -39,12 +41,21 @@ Summary: bin components for the cri-o package.
 Group: Binaries
 Requires: cri-o-data = %{version}-%{release}
 Requires: cri-o-libexec = %{version}-%{release}
+Requires: cri-o-config = %{version}-%{release}
 Requires: cri-o-license = %{version}-%{release}
 Requires: cri-o-man = %{version}-%{release}
 Requires: cri-o-services = %{version}-%{release}
 
 %description bin
 bin components for the cri-o package.
+
+
+%package config
+Summary: config components for the cri-o package.
+Group: Default
+
+%description config
+config components for the cri-o package.
 
 
 %package data
@@ -58,6 +69,7 @@ data components for the cri-o package.
 %package libexec
 Summary: libexec components for the cri-o package.
 Group: Default
+Requires: cri-o-config = %{version}-%{release}
 Requires: cri-o-license = %{version}-%{release}
 
 %description libexec
@@ -101,12 +113,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543434336
+export SOURCE_DATE_EPOCH=1543519121
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1543434336
+export SOURCE_DATE_EPOCH=1543519121
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE
@@ -230,6 +242,8 @@ cp vendor/k8s.io/kubernetes/LICENSE %{buildroot}/usr/share/package-licenses/cri-
 cp vendor/k8s.io/kubernetes/third_party/forked/golang/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/vendor_k8s.io_kubernetes_third_party_forked_golang_LICENSE
 cp vendor/k8s.io/utils/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/vendor_k8s.io_utils_LICENSE
 %make_install PREFIX=%{buildroot}/usr
+mkdir -p %{buildroot}/usr/lib/tmpfiles.d
+install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cri-o.conf
 ## install_append content
 make install.completions PREFIX=%{buildroot}/usr
 make install.systemd PREFIX=%{buildroot}/usr
@@ -245,6 +259,10 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/crio
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/tmpfiles.d/cri-o.conf
 
 %files data
 %defattr(-,root,root,-)
