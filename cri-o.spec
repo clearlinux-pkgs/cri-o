@@ -4,9 +4,9 @@
 #
 Name     : cri-o
 Version  : 1.12.3
-Release  : 44
-URL      : https://github.com/kubernetes-incubator/cri-o/archive/v1.12.3.tar.gz
-Source0  : https://github.com/kubernetes-incubator/cri-o/archive/v1.12.3.tar.gz
+Release  : 45
+URL      : https://github.com/kubernetes-sigs/cri-o/archive/v1.12.3.tar.gz
+Source0  : https://github.com/kubernetes-sigs/cri-o/archive/v1.12.3.tar.gz
 Source1  : cri-o.tmpfiles
 Summary  : No detailed summary available
 Group    : Development/Tools
@@ -113,12 +113,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543598423
+export SOURCE_DATE_EPOCH=1545590827
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1543598423
+export SOURCE_DATE_EPOCH=1545590827
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE
