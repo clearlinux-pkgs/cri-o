@@ -1,4 +1,4 @@
-From eaed6cc7881b5775085a8b33d854f01643c7c389 Mon Sep 17 00:00:00 2001
+From bb3f7b5b254c76c323e5ce31e702e49f4d90c451 Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 27 Sep 2018 17:46:51 -0500
 Subject: [PATCH] crio.service: allow limited restarts on failure
@@ -19,10 +19,10 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/systemd/crio.service b/contrib/systemd/crio.service
-index 184aef2..eca940c 100644
+index 80b7578..07c9b37 100644
 --- a/contrib/systemd/crio.service
 +++ b/contrib/systemd/crio.service
-@@ -2,13 +2,15 @@
+@@ -2,12 +2,14 @@
  Description=Open Container Initiative Daemon
  Documentation=https://github.com/kubernetes-sigs/cri-o
  After=network-online.target
@@ -31,14 +31,13 @@ index 184aef2..eca940c 100644
  
  [Service]
  Type=notify
- EnvironmentFile=-/etc/sysconfig/crio-storage
- EnvironmentFile=-/etc/sysconfig/crio-network
+ EnvironmentFile=-/etc/sysconfig/crio
  Environment=GOTRACEBACK=crash
 -ExecStart=/usr/local/bin/crio \
 +ExecStart=/usr/bin/crio \
            $CRIO_STORAGE_OPTIONS \
-           $CRIO_NETWORK_OPTIONS
- ExecReload=/bin/kill -s HUP $MAINPID
+           $CRIO_NETWORK_OPTIONS \
+           $CRIO_METRICS_OPTIONS
 @@ -18,7 +20,8 @@ LimitNPROC=1048576
  LimitCORE=infinity
  OOMScoreAdjust=-999
@@ -50,5 +49,5 @@ index 184aef2..eca940c 100644
  [Install]
  WantedBy=multi-user.target
 -- 
-2.19.1
+2.20.0
 
