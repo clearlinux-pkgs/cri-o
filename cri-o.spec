@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.13.0
-Release  : 46
+Release  : 47
 URL      : https://github.com/kubernetes-sigs/cri-o/archive/v1.13.0.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-o/archive/v1.13.0.tar.gz
 Source1  : cri-o.tmpfiles
