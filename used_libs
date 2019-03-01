@@ -4,7 +4,6 @@ libdevmapper.so.1.02
 libdl.so.2
 libgcc_s.so.1
 libglib-2.0.so.0
-libgpg-error.so.0
 libgpgme.so.11
 libpthread.so.0
 libseccomp.so.2
