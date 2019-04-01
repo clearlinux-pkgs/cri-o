@@ -1,5 +1,6 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
+btrfs-progs-dev
 golang-github-cpuguy83-go-md2man
 libassuan-dev
-btrfs-progs-dev
+libseccomp
