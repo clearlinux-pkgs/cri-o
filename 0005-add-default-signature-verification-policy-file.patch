@@ -1,7 +1,7 @@
-From 68d3444ec187aeb39b96b637bb0f905a8022fa2e Mon Sep 17 00:00:00 2001
+From 4a20f5687d6421c037c427e39269c6793a6c333c Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 23 Aug 2018 11:47:30 -0500
-Subject: [PATCH] policy.json: add default signature verification policy file
+Subject: [PATCH 5/5] add default signature verification policy file
 
 This commit creates a default signature verification policy file
 file to allow image and signature validations.
@@ -16,7 +16,7 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 
 diff --git a/policy.json b/policy.json
 new file mode 100644
-index 0000000..fc643c8
+index 00000000..fc643c80
 --- /dev/null
 +++ b/policy.json
 @@ -0,0 +1,11 @@
@@ -32,5 +32,5 @@ index 0000000..fc643c8
 +        }
 +}
 -- 
-2.19.1
+2.21.0
 

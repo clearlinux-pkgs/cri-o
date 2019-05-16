@@ -1,7 +1,7 @@
-From bb3f7b5b254c76c323e5ce31e702e49f4d90c451 Mon Sep 17 00:00:00 2001
-From: Jose Lamego <jose.a.lamego@intel.com>
-Date: Thu, 27 Sep 2018 17:46:51 -0500
-Subject: [PATCH] crio.service: allow limited restarts on failure
+From db4dcc06623c90759a5add7fd7beb0ee3e8a9d1e Mon Sep 17 00:00:00 2001
+From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
+Date: Thu, 16 May 2019 20:08:50 +0000
+Subject: [PATCH 2/5] allow limited restarts on failure
 
 crio.service may fail to start if network is not fully available.
 
@@ -14,17 +14,18 @@ ExecStart line to appropriate crio bin path.
 Fixes: clearlinux/distribution#192
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
+Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 ---
- contrib/systemd/crio.service | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ contrib/systemd/crio.service | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/systemd/crio.service b/contrib/systemd/crio.service
-index 80b7578..07c9b37 100644
+index bf4d6568..a0cafe93 100644
 --- a/contrib/systemd/crio.service
 +++ b/contrib/systemd/crio.service
-@@ -2,12 +2,14 @@
- Description=Open Container Initiative Daemon
- Documentation=https://github.com/kubernetes-sigs/cri-o
+@@ -3,12 +3,14 @@ Description=Open Container Initiative Daemon
+ Documentation=https://github.com/cri-o/cri-o
+ Wants=network-online.target
  After=network-online.target
 +StartLimitIntervalSec=120
 +StartLimitBurst=6
@@ -38,16 +39,15 @@ index 80b7578..07c9b37 100644
            $CRIO_STORAGE_OPTIONS \
            $CRIO_NETWORK_OPTIONS \
            $CRIO_METRICS_OPTIONS
-@@ -18,7 +20,8 @@ LimitNPROC=1048576
- LimitCORE=infinity
+@@ -20,6 +22,8 @@ LimitCORE=infinity
  OOMScoreAdjust=-999
  TimeoutStartSec=0
--Restart=on-abnormal
+ Restart=on-abnormal
 +Restart=on-failure
 +RestartSec=10
  
  [Install]
  WantedBy=multi-user.target
 -- 
-2.20.0
+2.21.0
 

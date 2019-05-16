@@ -1,7 +1,7 @@
-From 17e6b9adf13ff90e54f02d55622863a3df08e238 Mon Sep 17 00:00:00 2001
+From 07881e79c88285517ffe0f31fbb8748ee32f0c8e Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Thu, 4 Oct 2018 17:05:03 -0500
-Subject: [PATCH 3/3] Update default crio.conf file for Clear Linux
+Subject: [PATCH 3/5] Update default crio.conf file for Clear Linux
 
 Update paths to policy.json, seccomp.json, conmon and cni plugins
 to reflect where they are intended to be used from Clear Linux.
@@ -14,10 +14,10 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 509a8e0..5a42653 100644
+index df46b630..9b441ec0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -104,6 +104,12 @@ bin/crio: .gopathok
+@@ -108,6 +108,12 @@ bin/crio: .gopathok
  
  crio.conf: bin/crio
  	./bin/crio --config="" config --default > crio.conf
@@ -31,5 +31,5 @@ index 509a8e0..5a42653 100644
  release-note:
  	@$(GOPATH)/bin/release-tool -n $(release)
 -- 
-2.19.1
+2.21.0
 

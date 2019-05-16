@@ -1,22 +1,23 @@
-From 3936b77f7746c1e687d9b651b613255de4deb6d8 Mon Sep 17 00:00:00 2001
-From: Jose Lamego <jose.a.lamego@intel.com>
-Date: Fri, 10 Aug 2018 10:21:06 -0500
-Subject: [PATCH] include /usr/share/defaults in conf file search
+From 0d51bb31d94cccbf30a2fa5df0364a91f863cda5 Mon Sep 17 00:00:00 2001
+From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
+Date: Thu, 16 May 2019 18:58:43 +0000
+Subject: [PATCH 1/5] include /usr/share/defaults in conf file search
 
 crio conf file may not be present in default /etc/crio directory.
 This change includes looking in /usr/share/defaults/crio if
 not found in default location.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
+Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 ---
  cmd/crio/main.go | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
 diff --git a/cmd/crio/main.go b/cmd/crio/main.go
-index 6f8d13b..9a7ad4a 100644
+index 1ae28965..50af12fb 100644
 --- a/cmd/crio/main.go
 +++ b/cmd/crio/main.go
-@@ -37,6 +37,10 @@ import (
+@@ -34,6 +34,10 @@ import (
  // It will be populated by the Makefile.
  var gitCommit = ""
  
@@ -24,13 +25,13 @@ index 6f8d13b..9a7ad4a 100644
 +// stateless systems
 +var statelessConfigFile = "/usr/share/defaults/crio/crio.conf"
 +
- var deprecatedRuntimeMsg = `
- /*\ Warning /*\
- DEPRECATED: Use Runtimes instead.
-@@ -125,6 +129,12 @@ func mergeConfig(config *server.Config, ctx *cli.Context) error {
+ // DefaultsPath is the path to default configuration files set at build time
+ var DefaultsPath string
+ 
+@@ -59,6 +63,12 @@ func mergeConfig(config *server.Config, ctx *cli.Context) error {
  			// default doesn't exist. But we will log a warning about it, so
  			// the user doesn't miss it.
- 			logrus.Warnf("default configuration file does not exist: %s", server.CrioConfigPath)
+ 			logrus.Warnf("default configuration file does not exist: %s", path)
 +			logrus.Warnf("attempting to load configuration file from stateles directory: %s", statelessConfigFile)
 +			if err := config.UpdateFromFile(statelessConfigFile); err != nil {
 +				if ctx.GlobalIsSet("config") || os.IsNotExist(err) {
@@ -41,5 +42,5 @@ index 6f8d13b..9a7ad4a 100644
  	}
  
 -- 
-2.19.1
+2.21.0
 
