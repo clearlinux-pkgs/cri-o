@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.14.1
-Release  : 52
+Release  : 53
 URL      : https://github.com/kubernetes-sigs/cri-o/archive/v1.14.1.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-o/archive/v1.14.1.tar.gz
 Source1  : cri-o.tmpfiles
@@ -24,6 +24,8 @@ BuildRequires : golang-github-cpuguy83-go-md2man
 BuildRequires : gpgme-dev
 BuildRequires : libassuan-dev
 BuildRequires : libgpg-error-dev
+BuildRequires : libgpg-error-extras
+BuildRequires : libgpg-error-staticdev
 BuildRequires : pkgconfig(devmapper)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libseccomp)
@@ -112,14 +114,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1558038313
+export SOURCE_DATE_EPOCH=1558460546
 export GCC_IGNORE_WERROR=1
 export LDFLAGS="${LDFLAGS} -fno-lto"
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1558038313
+export SOURCE_DATE_EPOCH=1558460546
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE

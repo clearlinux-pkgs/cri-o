@@ -4,3 +4,5 @@ golang-github-cpuguy83-go-md2man
 libassuan-dev
 btrfs-progs-dev
 libgpg-error-dev
+libgpg-error-extras
+libgpg-error-staticdev
