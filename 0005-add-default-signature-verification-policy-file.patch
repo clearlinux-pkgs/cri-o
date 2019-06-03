@@ -1,4 +1,4 @@
-From 4a20f5687d6421c037c427e39269c6793a6c333c Mon Sep 17 00:00:00 2001
+From 80fb9a4a4aa4fc2ed9c50db0388a3c830d598e32 Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 23 Aug 2018 11:47:30 -0500
 Subject: [PATCH 5/5] add default signature verification policy file

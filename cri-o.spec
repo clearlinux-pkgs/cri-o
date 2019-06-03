@@ -4,13 +4,13 @@
 #
 Name     : cri-o
 Version  : 1.14.1
-Release  : 53
+Release  : 54
 URL      : https://github.com/kubernetes-sigs/cri-o/archive/v1.14.1.tar.gz
 Source0  : https://github.com/kubernetes-sigs/cri-o/archive/v1.14.1.tar.gz
 Source1  : cri-o.tmpfiles
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : Apache-2.0 BSD-2-Clause BSD-2-Clause-FreeBSD BSD-3-Clause CC-BY-SA-4.0 ISC MIT MPL-2.0-no-copyleft-exception WTFPL
+License  : Apache-2.0 BSD-2-Clause BSD-2-Clause-FreeBSD BSD-3-Clause CC-BY-SA-4.0 ISC MIT MPL-2.0 MPL-2.0-no-copyleft-exception WTFPL
 Requires: cri-o-bin = %{version}-%{release}
 Requires: cri-o-config = %{version}-%{release}
 Requires: cri-o-data = %{version}-%{release}
@@ -114,14 +114,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1558460546
+export SOURCE_DATE_EPOCH=1559600643
 export GCC_IGNORE_WERROR=1
 export LDFLAGS="${LDFLAGS} -fno-lto"
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1558460546
+export SOURCE_DATE_EPOCH=1559600643
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE

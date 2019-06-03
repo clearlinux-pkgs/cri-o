@@ -1,4 +1,4 @@
-From 07881e79c88285517ffe0f31fbb8748ee32f0c8e Mon Sep 17 00:00:00 2001
+From 18ecfc346f71bf905fb32afceff11bb3f1380456 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Thu, 4 Oct 2018 17:05:03 -0500
 Subject: [PATCH 3/5] Update default crio.conf file for Clear Linux
@@ -10,14 +10,14 @@ driver.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
- Makefile | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Makefile | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index df46b630..9b441ec0 100644
+index df46b630..295588bc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -108,6 +108,12 @@ bin/crio: .gopathok
+@@ -108,6 +108,13 @@ bin/crio: .gopathok
  
  crio.conf: bin/crio
  	./bin/crio --config="" config --default > crio.conf
@@ -27,6 +27,7 @@ index df46b630..9b441ec0 100644
 +	sed -i "s|^#\(registries = \[\).*|\1\n\t'docker.io',\n\]|" crio.conf
 +	sed -i 's|^\(signature_policy = \).*|\1"/usr/share/defaults/crio/policy.json"|' crio.conf
 +	sed -i 's|^#\(storage_driver = \).*|\1"overlay"|' crio.conf
++	sed -i 's|^\(plugin_dir = \[\).*|\1\n\t"/usr/libexec/cni",|' crio.conf
  
  release-note:
  	@$(GOPATH)/bin/release-tool -n $(release)

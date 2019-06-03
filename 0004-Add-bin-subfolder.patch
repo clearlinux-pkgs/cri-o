@@ -1,4 +1,4 @@
-From cecad16fad9a639a4a2bceabc0333f1abc07b0de Mon Sep 17 00:00:00 2001
+From 4fb03ec3110221c2a641664be46d04a914ef242e Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Mon, 23 Jul 2018 10:18:34 -0500
 Subject: [PATCH 4/5] Add bin subfolder
