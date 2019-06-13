@@ -1,7 +1,7 @@
-From db4dcc06623c90759a5add7fd7beb0ee3e8a9d1e Mon Sep 17 00:00:00 2001
+From f2db90d78ee5fbe10800f6f87072aacffaa02a03 Mon Sep 17 00:00:00 2001
 From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 Date: Thu, 16 May 2019 20:08:50 +0000
-Subject: [PATCH 2/5] allow limited restarts on failure
+Subject: [PATCH 2/6] allow limited restarts on failure
 
 crio.service may fail to start if network is not fully available.
 
@@ -20,7 +20,7 @@ Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/systemd/crio.service b/contrib/systemd/crio.service
-index bf4d6568..a0cafe93 100644
+index bf4d656..a0cafe9 100644
 --- a/contrib/systemd/crio.service
 +++ b/contrib/systemd/crio.service
 @@ -3,12 +3,14 @@ Description=Open Container Initiative Daemon
@@ -49,5 +49,5 @@ index bf4d6568..a0cafe93 100644
  [Install]
  WantedBy=multi-user.target
 -- 
-2.21.0
+2.22.0
 

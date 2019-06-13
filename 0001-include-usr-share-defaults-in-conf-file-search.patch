@@ -1,7 +1,7 @@
-From 0d51bb31d94cccbf30a2fa5df0364a91f863cda5 Mon Sep 17 00:00:00 2001
+From 9f9e5a974978d3650ba5ed619552379b35e15364 Mon Sep 17 00:00:00 2001
 From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 Date: Thu, 16 May 2019 18:58:43 +0000
-Subject: [PATCH 1/5] include /usr/share/defaults in conf file search
+Subject: [PATCH 1/6] include /usr/share/defaults in conf file search
 
 crio conf file may not be present in default /etc/crio directory.
 This change includes looking in /usr/share/defaults/crio if
@@ -14,7 +14,7 @@ Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/cmd/crio/main.go b/cmd/crio/main.go
-index 1ae28965..50af12fb 100644
+index 7440e11..4ddee45 100644
 --- a/cmd/crio/main.go
 +++ b/cmd/crio/main.go
 @@ -34,6 +34,10 @@ import (
@@ -42,5 +42,5 @@ index 1ae28965..50af12fb 100644
  	}
  
 -- 
-2.21.0
+2.22.0
 

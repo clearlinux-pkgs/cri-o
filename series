@@ -1,5 +1,6 @@
 0001-include-usr-share-defaults-in-conf-file-search.patch
-0002-allow-limited-restarts-on-failure.patch 
+0002-allow-limited-restarts-on-failure.patch
 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
 0004-Add-bin-subfolder.patch
 0005-add-default-signature-verification-policy-file.patch
+0006-Update-Makefile-to-be-usable-without-git.patch

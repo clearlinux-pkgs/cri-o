@@ -1,7 +1,7 @@
-From 4fb03ec3110221c2a641664be46d04a914ef242e Mon Sep 17 00:00:00 2001
+From afe4f123fd4b643f6c2c0be21092bc765c31cdf0 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Mon, 23 Jul 2018 10:18:34 -0500
-Subject: [PATCH 4/5] Add bin subfolder
+Subject: [PATCH 4/6] Add bin subfolder
 
 In order for binary targets to build bin must exist, so add it to the
 repo and remove it from the package's .gitignore.
@@ -14,7 +14,7 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
  create mode 100644 bin/.gitignore
 
 diff --git a/.gitignore b/.gitignore
-index 3df128b9..1673977b 100644
+index 3df128b..1673977 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -9,7 +9,6 @@
@@ -27,11 +27,11 @@ index 3df128b9..1673977b 100644
  /test/copyimg/copyimg
 diff --git a/bin/.gitignore b/bin/.gitignore
 new file mode 100644
-index 00000000..f935021a
+index 0000000..f935021
 --- /dev/null
 +++ b/bin/.gitignore
 @@ -0,0 +1 @@
 +!.gitignore
 -- 
-2.21.0
+2.22.0
 
