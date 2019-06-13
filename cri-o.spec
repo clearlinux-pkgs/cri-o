@@ -4,9 +4,9 @@
 #
 Name     : cri-o
 Version  : 1.14.4
-Release  : 56
-URL      : https://github.com/kubernetes-sigs/cri-o/archive/v1.14.4.tar.gz
-Source0  : https://github.com/kubernetes-sigs/cri-o/archive/v1.14.4.tar.gz
+Release  : 57
+URL      : https://github.com/cri-o/cri-o/archive/v1.14.4.tar.gz
+Source0  : https://github.com/cri-o/cri-o/archive/v1.14.4.tar.gz
 Source1  : cri-o.tmpfiles
 Summary  : No detailed summary available
 Group    : Development/Tools
@@ -116,7 +116,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1560407210
+export SOURCE_DATE_EPOCH=1560436115
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -126,7 +126,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1560407210
+export SOURCE_DATE_EPOCH=1560436115
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE
