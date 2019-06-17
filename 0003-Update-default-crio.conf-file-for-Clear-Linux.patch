@@ -27,7 +27,7 @@ index df46b63..295588b 100644
 +	sed -i "s|^#\(registries = \[\).*|\1\n\t'docker.io',\n\]|" crio.conf
 +	sed -i 's|^\(signature_policy = \).*|\1"/usr/share/defaults/crio/policy.json"|' crio.conf
 +	sed -i 's|^#\(storage_driver = \).*|\1"overlay"|' crio.conf
-+	sed -i 's|^\(plugin_dir = \[\).*|\1\n\t"/usr/libexec/cni",|' crio.conf
++	sed -i 's|^\(plugin_dirs = \[\).*|\1\n\t"/usr/libexec/cni",|' crio.conf
  
  release-note:
  	@$(GOPATH)/bin/release-tool -n $(release)
