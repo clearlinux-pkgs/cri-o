@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.14.4
-Release  : 58
+Release  : 59
 URL      : https://github.com/cri-o/cri-o/archive/v1.14.4.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.14.4.tar.gz
 Source1  : cri-o.tmpfiles
@@ -115,9 +115,10 @@ services components for the cri-o package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1560436115
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1565040593
 export GCC_IGNORE_WERROR=1
+export GOPROXY=file:///usr/share/goproxy
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
 export FFLAGS="$CFLAGS -fno-lto "
@@ -126,7 +127,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1560436115
+export SOURCE_DATE_EPOCH=1565040593
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp LICENSE %{buildroot}/usr/share/package-licenses/cri-o/LICENSE

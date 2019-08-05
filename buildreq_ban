@@ -1,2 +1,14 @@
 # This file contains build requirements that get picked up but are
 # undesirable. One entry per line, no whitespace.
+go-github.com-fsnotify-fsnotify
+go-github.com-golang-protobuf
+go-github.com-hpcloud-tail
+go-github.com-onsi-ginkgo
+go-golang.org-x-net
+go-golang.org-x-sync
+go-golang.org-x-sys
+go-golang.org-x-text
+go-gopkg.in-check.v1
+go-gopkg.in-fsnotify.v1
+go-gopkg.in-tomb.v1
+go-gopkg.in-yaml.v2
