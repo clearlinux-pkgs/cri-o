@@ -1,6 +1,15 @@
+sed -i -e 's:local/::' ./contrib/systemd/crio-wipe.service
+
+sed -i '8iStartLimitIntervalSec=120' ./contrib/systemd/crio.service
+sed -i '9iStartLimitBurst=6'         ./contrib/systemd/crio.service
+sed -i -e 's:local/::'               ./contrib/systemd/crio.service
+sed -i '27iRestart=on-failure'       ./contrib/systemd/crio.service
+sed -i '28iRestartSec=10'            ./contrib/systemd/crio.service
+
 make install.completions PREFIX=%{buildroot}/usr
 make install.systemd PREFIX=%{buildroot}/usr
+
 install -D -m 644 crio.conf %{buildroot}/usr/share/defaults/crio/crio.conf
-install -D -m 644 seccomp.json %{buildroot}/usr/share/defaults/crio/seccomp.json
+install -D -m 644 ./vendor/github.com/seccomp/containers-golang/seccomp.json %{buildroot}/usr/share/defaults/crio/seccomp.json
 install -D -m 644 crio-umount.conf %{buildroot}/usr/share/defaults/crio/crio-umount.conf
 install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json

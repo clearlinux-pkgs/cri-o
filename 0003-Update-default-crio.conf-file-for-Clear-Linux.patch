@@ -17,11 +17,10 @@ diff --git a/Makefile b/Makefile
 index df46b63..4218639 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -108,6 +108,14 @@ bin/crio: .gopathok
+@@ -108,6 +108,13 @@ bin/crio: .gopathok
  
  crio.conf: bin/crio
  	./bin/crio --config="" config --default > crio.conf
-+	sed -i 's|^#\(default_ulimits = \[\)|\1\n\t"nofile=65536:65536"\n\]|' crio.conf
 +	sed -i 's|^\(conmon = \).*|\1"/usr/libexec/crio/conmon"|' crio.conf
 +	sed -i 's|^\(seccomp_profile = \).*|\1"/usr/share/defaults/crio/seccomp.json"|' crio.conf
 +	sed -i "s|^#\(registries = \[\).*|\1\n\t'docker.io',\n\]|" crio.conf
