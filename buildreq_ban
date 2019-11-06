@@ -1,5 +1,14 @@
 # This file contains build requirements that get picked up but are
 # undesirable. One entry per line, no whitespace.
+go-github.com-containerd-cgroups
+go-github.com-containers-image-v5
+go-github.com-coreos-go-etcd
+go-github.com-cpuguy83-go-md2man-v2
+go-github.com-docker-go-metrics
+go-github.com-morikuni-aec
+go-github.com-ugorji-go-codec
+go-github.com-vishvananda-netlink
+go-github.com-vishvananda-netns
 go-github.com-BurntSushi-toml
 go-github.com-inconshreveable-mousetrap
 go-github.com-spf13-cobra

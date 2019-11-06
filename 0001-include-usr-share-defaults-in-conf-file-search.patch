@@ -10,25 +10,20 @@ not found in default location.
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 ---
- cmd/crio/main.go | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/cmd/crio/main.go b/cmd/crio/main.go
-index 7440e11..4ddee45 100644
---- a/cmd/crio/main.go
-+++ b/cmd/crio/main.go
-@@ -34,6 +34,10 @@ import (
- // It will be populated by the Makefile.
- var gitCommit = ""
+--- ./internal/pkg/criocli/criocli.go.orig	2019-11-06 22:00:24.448094609 +0000
++++ ./internal/pkg/criocli/criocli.go	2019-11-06 22:10:33.336227258 +0000
+@@ -16,6 +16,10 @@
+ // DefaultsPath is the path to default configuration files set at build time
+ var DefaultsPath string
  
 +// statelessConfigFile is the path to default configuration file in
 +// stateless systems
 +var statelessConfigFile = "/usr/share/defaults/crio/crio.conf"
 +
- // DefaultsPath is the path to default configuration files set at build time
- var DefaultsPath string
- 
-@@ -59,6 +63,12 @@ func mergeConfig(config *server.Config, ctx *cli.Context) error {
+ func GetConfigFromContext(c *cli.Context) (string, *libconfig.Config, error) {
+ 	config, ok := c.App.Metadata["config"].(*libconfig.Config)
+ 	if !ok {
+@@ -51,5 +55,11 @@
  			// default doesn't exist. But we will log a warning about it, so
  			// the user doesn't miss it.
  			logrus.Warnf("default configuration file does not exist: %s", path)
@@ -40,7 +35,3 @@ index 7440e11..4ddee45 100644
 +			}
  		}
  	}
- 
--- 
-2.22.0
-

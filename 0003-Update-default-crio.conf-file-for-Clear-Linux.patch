@@ -10,17 +10,12 @@ driver.
 
 Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 ---
- Makefile | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index df46b63..4218639 100644
---- a/Makefile
-+++ b/Makefile
-@@ -108,6 +108,13 @@ bin/crio: .gopathok
+--- a/Makefile	2019-11-06 22:31:31.705839929 +0000
++++ b/Makefile	2019-11-06 22:32:07.944624208 +0000
+@@ -141,6 +141,13 @@
  
  crio.conf: bin/crio
- 	./bin/crio --config="" config --default > crio.conf
+	./bin/crio --config="" $(CONF_OVERRIDES) config  > crio.conf
 +	sed -i 's|^\(conmon = \).*|\1"/usr/libexec/crio/conmon"|' crio.conf
 +	sed -i 's|^\(seccomp_profile = \).*|\1"/usr/share/defaults/crio/seccomp.json"|' crio.conf
 +	sed -i "s|^#\(registries = \[\).*|\1\n\t'docker.io',\n\]|" crio.conf
@@ -29,8 +24,5 @@ index df46b63..4218639 100644
 +	sed -i 's|^\(plugin_dirs = \[\).*|\1\n\t"/usr/libexec/cni",|' crio.conf
 +	sed -i 's|^\(cgroup_manager = \).*|\1"systemd"|' crio.conf
  
- release-note:
- 	@$(GOPATH)/bin/release-tool -n $(release)
--- 
-2.22.0
-
+ release-note: ${RELEASE_TOOL}
+	${RELEASE_TOOL} -n $(release)
