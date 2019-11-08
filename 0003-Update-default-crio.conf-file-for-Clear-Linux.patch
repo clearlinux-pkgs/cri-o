@@ -16,7 +16,7 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
  
  crio.conf: bin/crio
 	./bin/crio --config="" $(CONF_OVERRIDES) config  > crio.conf
-+	sed -i 's|^\(conmon = \).*|\1"/usr/libexec/crio/conmon"|' crio.conf
++	sed -i 's|^\(conmon = \).*|\1"/var/crio/conmon"|' crio.conf
 +	sed -i 's|^\(seccomp_profile = \).*|\1"/usr/share/defaults/crio/seccomp.json"|' crio.conf
 +	sed -i "s|^#\(registries = \[\).*|\1\n\t'docker.io',\n\]|" crio.conf
 +	sed -i 's|^\(signature_policy = \).*|\1"/usr/share/defaults/crio/policy.json"|' crio.conf
