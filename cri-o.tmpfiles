@@ -2,4 +2,3 @@ d /opt/ 0755 - - - -
 d /opt/cni 0755 - - - -
 d /opt/cni/bin 0755 - - - -
 d /etc/cni/net.d 0755 - - - -
-d /var/crio/conmon 0755 - - - -
