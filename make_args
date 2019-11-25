@@ -1,1 +1,13 @@
 GO_MD2MAN=/usr/bin/go-md2man
+CONF_OVERRIDES="
+ --cgroup-manager=systemd
+ --cni-plugin-dir=/opt/cni/bin
+ --cni-plugin-dir=/usr/libexec/cni
+ --conmon=/usr/libexec/podman/conmon
+ --manage-network-ns-lifecycle=true
+ --registry=docker.io
+ --runtimes=clearlinux-kata:/usr/bin/kata-runtime:
+ --seccomp-profile=/usr/share/defaults/crio/seccomp.json
+ --signature-policy=/usr/share/defaults/crio/policy.json
+ --storage-driver=overlay
+"

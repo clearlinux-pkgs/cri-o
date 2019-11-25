@@ -1,0 +1,22 @@
+--- a/pkg/config/template.go	2019-11-22 21:23:02.792547034 +0000
++++ b/pkg/config/template.go	2019-11-22 21:24:32.594477469 +0000
+@@ -41,7 +41,7 @@
+ 
+ # Storage driver used to manage the storage of images and containers. Please
+ # refer to containers-storage.conf(5) to see all available storage drivers.
+-#storage_driver = "{{ .Storage }}"
++storage_driver = "{{ .Storage }}"
+ 
+ # List to pass options to the storage driver. Please refer to
+ # containers-storage.conf(5) to see all available storage options.
+@@ -320,8 +320,8 @@
+ # compatibility reasons. Depending on your workload and usecase you may add more
+ # registries (e.g., "quay.io", "registry.fedoraproject.org",
+ # "registry.opensuse.org", etc.).
+-#registries = [
+-# {{ range $opt := .Registries }}{{ printf "\t%q,\n#" $opt }}{{ end }}]
++registries = [
++ {{ range $opt := .Registries }}{{ printf "\t%q,\n" $opt }}{{ end }}]
+ 
+ 
+ # The crio.network table containers settings pertaining to the management of

@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.16.0
-Release  : 69
+Release  : 70
 URL      : https://github.com/cri-o/cri-o/archive/v1.16.0.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.16.0.tar.gz
 Source1  : cri-o.tmpfiles
@@ -31,9 +31,9 @@ BuildRequires : pkgconfig(devmapper)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libseccomp)
 Patch1: 0001-Makefile-Set-DefaultsPath-for-stateless.patch
-Patch2: 0003-Update-default-crio.conf-file-for-Clear-Linux.patch
-Patch3: 0004-Add-bin-subfolder.patch
-Patch4: 0005-add-default-signature-verification-policy-file.patch
+Patch2: 0004-Add-bin-subfolder.patch
+Patch3: 0005-add-default-signature-verification-policy-file.patch
+Patch4: 0006-modify-template-to-uncomment-defaults.patch
 
 %description
 Builds Dockerfile using the Docker client
@@ -114,18 +114,30 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1574096007
+export SOURCE_DATE_EPOCH=1574724694
 export GCC_IGNORE_WERROR=1
 export GOPROXY=file:///usr/share/goproxy
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
 export FFLAGS="$CFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
-make  %{?_smp_mflags}  GO_MD2MAN=/usr/bin/go-md2man
+make  %{?_smp_mflags}  GO_MD2MAN=/usr/bin/go-md2man \
+CONF_OVERRIDES=" \
+--cgroup-manager=systemd \
+--cni-plugin-dir=/opt/cni/bin \
+--cni-plugin-dir=/usr/libexec/cni \
+--conmon=/usr/libexec/podman/conmon \
+--manage-network-ns-lifecycle=true \
+--registry=docker.io \
+--runtimes=clearlinux-kata:/usr/bin/kata-runtime: \
+--seccomp-profile=/usr/share/defaults/crio/seccomp.json \
+--signature-policy=/usr/share/defaults/crio/policy.json \
+--storage-driver=overlay \
+"
 
 
 %install
-export SOURCE_DATE_EPOCH=1574096007
+export SOURCE_DATE_EPOCH=1574724694
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-1.16.0/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
