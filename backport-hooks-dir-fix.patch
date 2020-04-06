@@ -1,0 +1,148 @@
+From 0eec454168e381e460b3d6de07bf50bfd9b0d082 Mon Sep 17 00:00:00 2001
+From: Sascha Grunert <sgrunert@suse.com>
+Date: Wed, 5 Feb 2020 09:36:59 +0100
+Subject: [PATCH] Skip invalid hooks directories by default
+
+If a specified or the default hooks directory is not available, then we
+warn the user but do not fail any more.
+
+Fixes: #3179
+
+Signed-off-by: Sascha Grunert <sgrunert@suse.com>
+---
+ completions/fish/crio.fish      |  2 ++
+ docs/crio.8.md                  |  2 ++
+ internal/pkg/criocli/criocli.go |  2 ++
+ pkg/config/config.go            |  8 +++++++-
+ pkg/config/config_test.go       | 25 ++++++++-----------------
+ pkg/config/template.go          |  3 ++-
+ 6 files changed, 23 insertions(+), 19 deletions(-)
+
+diff --git a/completions/fish/crio.fish b/completions/fish/crio.fish
+index 543a61a542..4a1f98085c 100644
+--- a/completions/fish/crio.fish
++++ b/completions/fish/crio.fish
+@@ -46,6 +46,8 @@ complete -c crio -n '__fish_crio_no_subcommand' -l global-auth-file -r -d 'Path
+ complete -c crio -n '__fish_crio_no_subcommand' -f -l grpc-max-recv-msg-size -r -d 'Maximum grpc receive message size in bytes'
+ complete -c crio -n '__fish_crio_no_subcommand' -f -l grpc-max-send-msg-size -r -d 'Maximum grpc receive message size'
+ complete -c crio -n '__fish_crio_no_subcommand' -f -l hooks-dir -r -d 'Set the OCI hooks directory path (may be set multiple times) (default: ["/usr/share/containers/oci/hooks.d"])
++    If one of the directories does not exist, then CRI-O will automatically
++    skip them.
+     Each \'\*.json\' file in the path configures a hook for CRI-O
+     containers. For more details on the syntax of the JSON files and
+     the semantics of hook injection, see \'oci-hooks(5)\'. CRI-O
+diff --git a/docs/crio.8.md b/docs/crio.8.md
+index 03dc7c9318..1822e56229 100644
+--- a/docs/crio.8.md
++++ b/docs/crio.8.md
+@@ -173,6 +173,8 @@ crio [GLOBAL OPTIONS] command [COMMAND OPTIONS] [ARGUMENTS...]
+ **--help, -h**: show help
+ 
+ **--hooks-dir**="": Set the OCI hooks directory path (may be set multiple times) (default: ["/usr/share/containers/oci/hooks.d"])
++    If one of the directories does not exist, then CRI-O will automatically
++    skip them.
+     Each '\*.json' file in the path configures a hook for CRI-O
+     containers. For more details on the syntax of the JSON files and
+     the semantics of hook injection, see 'oci-hooks(5)'. CRI-O
+diff --git a/internal/pkg/criocli/criocli.go b/internal/pkg/criocli/criocli.go
+index d1b159ccff..b09b590cde 100644
+--- a/internal/pkg/criocli/criocli.go
++++ b/internal/pkg/criocli/criocli.go
+@@ -524,6 +524,8 @@ func getCrioFlags(defConf *libconfig.Config) []cli.Flag {
+ 		&cli.StringSliceFlag{
+ 			Name: "hooks-dir",
+ 			Usage: fmt.Sprintf("Set the OCI hooks directory path (may be set multiple times) (default: %q)", defConf.HooksDir) + `
++    If one of the directories does not exist, then CRI-O will automatically
++    skip them.
+     Each '\*.json' file in the path configures a hook for CRI-O
+     containers. For more details on the syntax of the JSON files and
+     the semantics of hook injection, see 'oci-hooks(5)'. CRI-O
+diff --git a/pkg/config/config.go b/pkg/config/config.go
+index 27879c0c23..40c33b4b3b 100644
+--- a/pkg/config/config.go
++++ b/pkg/config/config.go
+@@ -750,11 +750,17 @@ func (c *RuntimeConfig) Validate(systemContext *types.SystemContext, onExecution
+ 			return errors.Wrapf(err, "invalid registries")
+ 		}
+ 
++		// Sort out invalid hooks directories
++		hooksDirs := []string{}
+ 		for _, hooksDir := range c.HooksDir {
+ 			if err := utils.IsDirectory(hooksDir); err != nil {
+-				return errors.Wrapf(err, "invalid hooks_dir: %s", err)
++				logrus.Warnf("skipping invalid hooks directory: %v", err)
++				continue
+ 			}
++			logrus.Debugf("using  hooks directory: %s", hooksDir)
++			hooksDirs = append(hooksDirs, hooksDir)
+ 		}
++		c.HooksDir = hooksDirs
+ 
+ 		// Validate the conmon path
+ 		if err := c.ValidateConmonPath("conmon"); err != nil {
+diff --git a/pkg/config/config_test.go b/pkg/config/config_test.go
+index 7ba737306e..fe6700e3eb 100644
+--- a/pkg/config/config_test.go
++++ b/pkg/config/config_test.go
+@@ -214,39 +214,30 @@ var _ = t.Describe("Config", func() {
+ 			sut.PinnsPath = validFilePath
+ 			sut.NamespacesDir = os.TempDir()
+ 			sut.Conmon = validFilePath
+-			sut.HooksDir = []string{validDirPath}
++			sut.HooksDir = []string{validDirPath, validDirPath, validDirPath}
+ 
+ 			// When
+ 			err := sut.RuntimeConfig.Validate(nil, true)
+ 
+ 			// Then
+ 			Expect(err).To(BeNil())
++			Expect(sut.HooksDir).To(HaveLen(3))
+ 		})
+ 
+-		It("should fail on invalid hooks directory", func() {
+-			// Given
+-			sut.Runtimes["runc"] = &config.RuntimeHandler{RuntimePath: validFilePath}
+-			sut.Conmon = validFilePath
+-			sut.HooksDir = []string{invalidPath}
+-
+-			// When
+-			err := sut.RuntimeConfig.Validate(nil, true)
+-
+-			// Then
+-			Expect(err).NotTo(BeNil())
+-		})
+-
+-		It("should fail if the hooks directory is not a directory", func() {
++		It("should sort out invalid hooks directories", func() {
+ 			// Given
+ 			sut.Runtimes["runc"] = &config.RuntimeHandler{RuntimePath: validFilePath}
+ 			sut.Conmon = validFilePath
+-			sut.HooksDir = []string{validFilePath}
++			sut.PinnsPath = validFilePath
++			sut.NamespacesDir = os.TempDir()
++			sut.HooksDir = []string{invalidPath, validDirPath, validDirPath}
+ 
+ 			// When
+ 			err := sut.RuntimeConfig.Validate(nil, true)
+ 
+ 			// Then
+-			Expect(err).NotTo(BeNil())
++			Expect(err).To(BeNil())
++			Expect(sut.HooksDir).To(HaveLen(2))
+ 		})
+ 
+ 		It("should fail on invalid conmon path", func() {
+diff --git a/pkg/config/template.go b/pkg/config/template.go
+index 5181adfa9b..b16b9a9f1a 100644
+--- a/pkg/config/template.go
++++ b/pkg/config/template.go
+@@ -160,7 +160,8 @@ default_sysctls = [
+ additional_devices = [
+ {{ range $device := .AdditionalDevices}}{{ printf "\t%q, \n" $device}}{{ end }}]
+ 
+-# Path to OCI hooks directories for automatically executed hooks.
++# Path to OCI hooks directories for automatically executed hooks. If one of the
++# directories does not exist, then CRI-O will automatically skip them.
+ hooks_dir = [
+ {{ range $hooksDir := .HooksDir }}{{ printf "\t%q, \n" $hooksDir}}{{ end }}]
+ 

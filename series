@@ -2,3 +2,4 @@
 0004-Add-bin-subfolder.patch
 0005-add-default-signature-verification-policy-file.patch
 0006-modify-template-to-uncomment-defaults.patch
+backport-hooks-dir-fix.patch

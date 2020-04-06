@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.17.2
-Release  : 72
+Release  : 75
 URL      : https://github.com/cri-o/cri-o/archive/v1.17.2.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.17.2.tar.gz
 Source1  : cri-o.tmpfiles
@@ -33,6 +33,7 @@ Patch1: 0001-Makefile-Set-DefaultsPath-for-stateless.patch
 Patch2: 0004-Add-bin-subfolder.patch
 Patch3: 0005-add-default-signature-verification-policy-file.patch
 Patch4: 0006-modify-template-to-uncomment-defaults.patch
+Patch5: backport-hooks-dir-fix.patch
 
 %description
 Builds Dockerfile using the Docker client
@@ -96,13 +97,14 @@ cd %{_builddir}/cri-o-1.17.2
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1585869911
+export SOURCE_DATE_EPOCH=1586287499
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -124,7 +126,7 @@ CONF_OVERRIDES=" \
 
 
 %install
-export SOURCE_DATE_EPOCH=1585869911
+export SOURCE_DATE_EPOCH=1586287499
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-1.17.2/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
