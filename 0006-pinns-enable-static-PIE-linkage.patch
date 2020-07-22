@@ -1,0 +1,27 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Wed, 22 Jul 2020 10:29:36 -0700
+Subject: [PATCH] pinns: enable static PIE linkage
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ pinns/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pinns/Makefile b/pinns/Makefile
+index 72be9c5..bc82eb7 100644
+--- a/pinns/Makefile
++++ b/pinns/Makefile
+@@ -3,10 +3,10 @@ obj = $(src:.c=.o)
+ 
+ override LIBS +=
+ CFLAGS ?= -std=c99 -Os -Wall -Wextra
+-override CFLAGS += -static
++override CFLAGS += -static-pie
+ 
+ ../bin/pinns: $(obj) | ../bin
+-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
++	$(CC) -fPIE -o $@ $^ $(CFLAGS) $(LIBS)
+ 
+ ../bin:
+ 	mkdir -p $@

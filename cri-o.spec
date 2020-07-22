@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.17.3
-Release  : 77
+Release  : 78
 URL      : https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
 Source1  : cri-o.tmpfiles
@@ -30,10 +30,11 @@ BuildRequires : pkgconfig(devmapper)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libseccomp)
 Patch1: 0001-Makefile-Set-DefaultsPath-for-stateless.patch
-Patch2: 0004-Add-bin-subfolder.patch
-Patch3: 0005-add-default-signature-verification-policy-file.patch
-Patch4: 0006-modify-template-to-uncomment-defaults.patch
-Patch5: backport-hooks-dir-fix.patch
+Patch2: 0002-Add-bin-subfolder.patch
+Patch3: 0003-add-default-signature-verification-policy-file.patch
+Patch4: 0004-use-CONF_OVERRIDES-command-line-instead-of-sed-to-se.patch
+Patch5: 0005-Skip-invalid-hooks-directories-by-default.patch
+Patch6: 0006-pinns-enable-static-PIE-linkage.patch
 
 %description
 Builds Dockerfile using the Docker client
@@ -98,13 +99,14 @@ cd %{_builddir}/cri-o-1.17.3
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586363451
+export SOURCE_DATE_EPOCH=1595439567
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -122,11 +124,12 @@ CONF_OVERRIDES=" \
 --seccomp-profile=/usr/share/defaults/crio/seccomp.json \
 --signature-policy=/usr/share/defaults/crio/policy.json \
 --storage-driver=overlay \
-"
+" \
+GOFLAGS="-buildmode=pie -v"
 
 
 %install
-export SOURCE_DATE_EPOCH=1586363451
+export SOURCE_DATE_EPOCH=1595439567
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-1.17.3/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
@@ -137,6 +140,7 @@ cp %{_builddir}/cri-o-1.17.3/vendor/github.com/Microsoft/go-winio/LICENSE %{buil
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/Microsoft/go-winio/archive/tar/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/7f7a12bcfc16fab2522aa1a562fd3d2aee429d3b
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/Microsoft/hcsshim/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/56b820712432e458f05f883566ca8cd85dcdaad5
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/VividCortex/ewma/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/5fcf3d8a80be9b86a2c442ab938090611e6ee317
+cp %{_builddir}/cri-o-1.17.3/vendor/github.com/acarl005/stripansi/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/c5f9a33906e2c8c9b408c50d38e01e7a08449ee7
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/beorn7/perks/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/b2e4520feb0f9b51ad373256b94c3faf4c1e6871
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/blang/semver/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/16e22f58039363cff486afeac52bde18cd4ab5b3
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/checkpoint-restore/go-criu/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
@@ -186,6 +190,8 @@ cp %{_builddir}/cri-o-1.17.3/vendor/github.com/emicklei/go-restful/LICENSE %{bui
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/etcd-io/bbolt/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/66c5c002958b1f31f74410b353972d622d74e007
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/fsnotify/fsnotify/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/7b421b3d8f9fe9dc8158b5e6efed1c448605ba92
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/fsouza/go-dockerclient/DOCKER-LICENSE %{buildroot}/usr/share/package-licenses/cri-o/38b6ab71259ac7449fa513e878a94a232335fe84
+cp %{_builddir}/cri-o-1.17.3/vendor/github.com/fsouza/go-dockerclient/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/3f742a414eff1d49bcaab97736d73488f1c16164
+cp %{_builddir}/cri-o-1.17.3/vendor/github.com/fullsailor/pkcs7/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/f9bbe972432aebdebf3469c89434273ba88ec9c7
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/ghodss/yaml/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/271aeaf56ee621c5accfc2a9db0b10717e038eaf
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/go-zoo/bone/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/fccca95593d9caca0c51503b96cd5fcd7b8b0bdf
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/godbus/dbus/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/994658c265db5dbf456fa6163905cc9c0b3bda46
@@ -263,6 +269,7 @@ cp %{_builddir}/cri-o-1.17.3/vendor/github.com/spf13/cobra/LICENSE.txt %{buildro
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/spf13/pflag/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/b3c86ae465b21f7323059db335158b48187731c7
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/syndtr/gocapability/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/a44bfde22babd7c7e1ccac9ca31f85a09358769f
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/tchap/go-patricia/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/7d3d6e2c0e14d20f475edae2f3936c574809efd5
+cp %{_builddir}/cri-o-1.17.3/vendor/github.com/ulikunitz/xz/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/f1fdbb57481f9defd8afeb7f8ab6aec43efc9a07
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/urfave/cli/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/62e85c543bad57a03eff756c0cfcb4bd26b77a4a
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/urfave/cli/v2/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/62e85c543bad57a03eff756c0cfcb4bd26b77a4a
 cp %{_builddir}/cri-o-1.17.3/vendor/github.com/vbatts/git-validation/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/5bcc18c4f348cadfab7beb94aa6cbd43ca5b0bba
@@ -381,6 +388,7 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 /usr/share/package-licenses/cri-o/376caa2cd54c4196280157d071524614350e7ce8
 /usr/share/package-licenses/cri-o/37a5e9e1835e9b179f9d7175f25c3349d47b76f8
 /usr/share/package-licenses/cri-o/38b6ab71259ac7449fa513e878a94a232335fe84
+/usr/share/package-licenses/cri-o/3f742a414eff1d49bcaab97736d73488f1c16164
 /usr/share/package-licenses/cri-o/3faf341fbc32621fe1ac089ae2ab7a23980fc189
 /usr/share/package-licenses/cri-o/40759db9edbb7fe30b64cc213f4f20c4618e2932
 /usr/share/package-licenses/cri-o/482a69af7e9431b91119f958a5ee57f4c149808b
@@ -439,6 +447,7 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 /usr/share/package-licenses/cri-o/b7a606730713ac061594edab33cf941704b4a95c
 /usr/share/package-licenses/cri-o/b7b97d84a5f0b778ab971d2afce44f47c8b6e80a
 /usr/share/package-licenses/cri-o/c111106ab0af1873aa6350f797759fe1519c8be1
+/usr/share/package-licenses/cri-o/c5f9a33906e2c8c9b408c50d38e01e7a08449ee7
 /usr/share/package-licenses/cri-o/c6821d75aac4a65fae7d56a425e304beb3689c26
 /usr/share/package-licenses/cri-o/c700a8b9312d24bdc57570f7d6a131cf63d89016
 /usr/share/package-licenses/cri-o/c7feacb4667f8c63c89e2eeeb9a913bd3ced8ac2
@@ -453,9 +462,11 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 /usr/share/package-licenses/cri-o/e2ee43b586677eaafd7dd7af25adff48adfa7cf3
 /usr/share/package-licenses/cri-o/ece3df1263c100f93c427face535a292723d38e7
 /usr/share/package-licenses/cri-o/eecfc0c7e0930c6ba1ed0ff2d46a0a6fa0d16d6c
+/usr/share/package-licenses/cri-o/f1fdbb57481f9defd8afeb7f8ab6aec43efc9a07
 /usr/share/package-licenses/cri-o/f3eab54cb1736b419ef75b8c44bea2b17614bd31
 /usr/share/package-licenses/cri-o/f7f33fde14de785a3ac53f250bb746ba30844639
 /usr/share/package-licenses/cri-o/f88291c879c4ee329bfa341b54eaedd29d3058cf
+/usr/share/package-licenses/cri-o/f9bbe972432aebdebf3469c89434273ba88ec9c7
 /usr/share/package-licenses/cri-o/f9cab757896ef6b3570e62b2df7fb63ab1a34b80
 /usr/share/package-licenses/cri-o/fccca95593d9caca0c51503b96cd5fcd7b8b0bdf
 /usr/share/package-licenses/cri-o/fd6460234f122a19f21affb6d6885269340b9176

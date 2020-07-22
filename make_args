@@ -11,3 +11,4 @@ CONF_OVERRIDES="
  --signature-policy=/usr/share/defaults/crio/policy.json
  --storage-driver=overlay
 "
+GOFLAGS="-buildmode=pie -v"
