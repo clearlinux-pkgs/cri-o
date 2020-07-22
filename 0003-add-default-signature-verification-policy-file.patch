@@ -1,7 +1,7 @@
-From bdec51e99e3fb4afe893668f69957be77f8a9e82 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 23 Aug 2018 11:47:30 -0500
-Subject: [PATCH 5/6] add default signature verification policy file
+Subject: [PATCH] add default signature verification policy file
 
 This commit creates a default signature verification policy file
 file to allow image and signature validations.
@@ -31,6 +31,3 @@ index 0000000..fc643c8
 +            "docker": {}
 +        }
 +}
--- 
-2.22.0
-

@@ -1,5 +1,5 @@
 0001-Makefile-Set-DefaultsPath-for-stateless.patch
-0004-Add-bin-subfolder.patch
-0005-add-default-signature-verification-policy-file.patch
-0006-modify-template-to-uncomment-defaults.patch
-backport-hooks-dir-fix.patch
+0002-Add-bin-subfolder.patch
+0003-add-default-signature-verification-policy-file.patch
+0004-use-CONF_OVERRIDES-command-line-instead-of-sed-to-se.patch
+0005-Skip-invalid-hooks-directories-by-default.patch

@@ -1,4 +1,4 @@
-From f21c2aad781036d06c4c697f63760664c427ba6e Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Mikko Ylinen <mikko.ylinen@intel.com>
 Date: Mon, 18 Nov 2019 16:41:20 +0000
 Subject: [PATCH] Makefile: Set DefaultsPath for stateless
@@ -9,10 +9,10 @@ Signed-off-by: Mikko Ylinen <mikko.ylinen@intel.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index c986ab8..10da06f 100644
+index ed9e612..521afeb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -76,7 +76,8 @@ GOPKGBASEDIR := $(shell dirname "$(GOPKGDIR)")
+@@ -84,7 +84,8 @@ GOPKGBASEDIR := $(shell dirname "$(GOPKGDIR)")
  # Update VPATH so make finds .gopathok
  VPATH := $(VPATH):$(GOPATH)
  SHRINKFLAGS := -s -w
@@ -21,7 +21,4 @@ index c986ab8..10da06f 100644
 +
  LDFLAGS = -ldflags '${BASE_LDFLAGS}'
  
- all: binaries crio.conf docs
--- 
-2.23.0
-
+ TESTIMAGE_VERSION := master-1.1.4

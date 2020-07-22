@@ -1,4 +1,4 @@
-From 0eec454168e381e460b3d6de07bf50bfd9b0d082 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Sascha Grunert <sgrunert@suse.com>
 Date: Wed, 5 Feb 2020 09:36:59 +0100
 Subject: [PATCH] Skip invalid hooks directories by default
@@ -19,7 +19,7 @@ Signed-off-by: Sascha Grunert <sgrunert@suse.com>
  6 files changed, 23 insertions(+), 19 deletions(-)
 
 diff --git a/completions/fish/crio.fish b/completions/fish/crio.fish
-index 543a61a542..4a1f98085c 100644
+index f43aff1..743bfc3 100644
 --- a/completions/fish/crio.fish
 +++ b/completions/fish/crio.fish
 @@ -46,6 +46,8 @@ complete -c crio -n '__fish_crio_no_subcommand' -l global-auth-file -r -d 'Path
@@ -32,10 +32,10 @@ index 543a61a542..4a1f98085c 100644
      containers. For more details on the syntax of the JSON files and
      the semantics of hook injection, see \'oci-hooks(5)\'. CRI-O
 diff --git a/docs/crio.8.md b/docs/crio.8.md
-index 03dc7c9318..1822e56229 100644
+index d46fcab..984c55e 100644
 --- a/docs/crio.8.md
 +++ b/docs/crio.8.md
-@@ -173,6 +173,8 @@ crio [GLOBAL OPTIONS] command [COMMAND OPTIONS] [ARGUMENTS...]
+@@ -175,6 +175,8 @@ crio [GLOBAL OPTIONS] command [COMMAND OPTIONS] [ARGUMENTS...]
  **--help, -h**: show help
  
  **--hooks-dir**="": Set the OCI hooks directory path (may be set multiple times) (default: ["/usr/share/containers/oci/hooks.d"])
@@ -45,10 +45,10 @@ index 03dc7c9318..1822e56229 100644
      containers. For more details on the syntax of the JSON files and
      the semantics of hook injection, see 'oci-hooks(5)'. CRI-O
 diff --git a/internal/pkg/criocli/criocli.go b/internal/pkg/criocli/criocli.go
-index d1b159ccff..b09b590cde 100644
+index 03961af..523c1bc 100644
 --- a/internal/pkg/criocli/criocli.go
 +++ b/internal/pkg/criocli/criocli.go
-@@ -524,6 +524,8 @@ func getCrioFlags(defConf *libconfig.Config) []cli.Flag {
+@@ -517,6 +517,8 @@ func getCrioFlags(defConf *libconfig.Config, systemContext *types.SystemContext)
  		&cli.StringSliceFlag{
  			Name: "hooks-dir",
  			Usage: fmt.Sprintf("Set the OCI hooks directory path (may be set multiple times) (default: %q)", defConf.HooksDir) + `
@@ -58,10 +58,10 @@ index d1b159ccff..b09b590cde 100644
      containers. For more details on the syntax of the JSON files and
      the semantics of hook injection, see 'oci-hooks(5)'. CRI-O
 diff --git a/pkg/config/config.go b/pkg/config/config.go
-index 27879c0c23..40c33b4b3b 100644
+index 53715b5..1c25b30 100644
 --- a/pkg/config/config.go
 +++ b/pkg/config/config.go
-@@ -750,11 +750,17 @@ func (c *RuntimeConfig) Validate(systemContext *types.SystemContext, onExecution
+@@ -736,11 +736,17 @@ func (c *RuntimeConfig) Validate(systemContext *types.SystemContext, onExecution
  			return errors.Wrapf(err, "invalid registries")
  		}
  
@@ -81,12 +81,12 @@ index 27879c0c23..40c33b4b3b 100644
  		// Validate the conmon path
  		if err := c.ValidateConmonPath("conmon"); err != nil {
 diff --git a/pkg/config/config_test.go b/pkg/config/config_test.go
-index 7ba737306e..fe6700e3eb 100644
+index 6eec5a0..601dcc3 100644
 --- a/pkg/config/config_test.go
 +++ b/pkg/config/config_test.go
-@@ -214,39 +214,30 @@ var _ = t.Describe("Config", func() {
- 			sut.PinnsPath = validFilePath
- 			sut.NamespacesDir = os.TempDir()
+@@ -210,39 +210,30 @@ var _ = t.Describe("Config", func() {
+ 				RuntimeType: config.DefaultRuntimeType,
+ 			}
  			sut.Conmon = validFilePath
 -			sut.HooksDir = []string{validDirPath}
 +			sut.HooksDir = []string{validDirPath, validDirPath, validDirPath}
@@ -133,10 +133,10 @@ index 7ba737306e..fe6700e3eb 100644
  
  		It("should fail on invalid conmon path", func() {
 diff --git a/pkg/config/template.go b/pkg/config/template.go
-index 5181adfa9b..b16b9a9f1a 100644
+index eded949..e7722f2 100644
 --- a/pkg/config/template.go
 +++ b/pkg/config/template.go
-@@ -160,7 +160,8 @@ default_sysctls = [
+@@ -157,7 +157,8 @@ default_sysctls = [
  additional_devices = [
  {{ range $device := .AdditionalDevices}}{{ printf "\t%q, \n" $device}}{{ end }}]
  
