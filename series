@@ -4,3 +4,4 @@
 0004-use-CONF_OVERRIDES-command-line-instead-of-sed-to-se.patch
 0005-Skip-invalid-hooks-directories-by-default.patch
 0006-pinns-enable-static-PIE-linkage.patch
+0001-github.com-creack-pty-bump-v1.1.7-to-v.1.1.10.patch

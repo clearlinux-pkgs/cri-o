@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.17.3
-Release  : 80
+Release  : 81
 URL      : https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
 Source1  : cri-o.tmpfiles
@@ -35,6 +35,7 @@ Patch3: 0003-add-default-signature-verification-policy-file.patch
 Patch4: 0004-use-CONF_OVERRIDES-command-line-instead-of-sed-to-se.patch
 Patch5: 0005-Skip-invalid-hooks-directories-by-default.patch
 Patch6: 0006-pinns-enable-static-PIE-linkage.patch
+Patch7: 0001-github.com-creack-pty-bump-v1.1.7-to-v.1.1.10.patch
 
 %description
 Builds Dockerfile using the Docker client
@@ -100,13 +101,14 @@ cd %{_builddir}/cri-o-1.17.3
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595439567
+export SOURCE_DATE_EPOCH=1605564082
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -129,7 +131,7 @@ GOFLAGS="-buildmode=pie -v"
 
 
 %install
-export SOURCE_DATE_EPOCH=1595439567
+export SOURCE_DATE_EPOCH=1605564082
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-1.17.3/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
