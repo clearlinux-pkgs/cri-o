@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.17.3
-Release  : 82
+Release  : 83
 URL      : https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
 Source1  : cri-o.tmpfiles
