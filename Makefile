@@ -1,5 +1,5 @@
 PKG_NAME := cri-o
-URL = https://github.com/cri-o/cri-o/archive/v1.17.3.tar.gz
+URL = https://github.com/cri-o/cri-o/archive/v1.19.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common

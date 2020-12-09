@@ -1,24 +1,28 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Mikko Ylinen <mikko.ylinen@intel.com>
-Date: Mon, 18 Nov 2019 16:41:20 +0000
+From 31d3d5ff71c2227b1fcd5cc3e6ee10d3c1f0098a Mon Sep 17 00:00:00 2001
+From: Mark D Horn <mark.d.horn@intel.com>
+Date: Thu, 3 Dec 2020 17:48:16 -0800
 Subject: [PATCH] Makefile: Set DefaultsPath for stateless
 
 Signed-off-by: Mikko Ylinen <mikko.ylinen@intel.com>
+Signed-off-by: Mark D Horn <mark.d.horn@intel.com>
 ---
  Makefile | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index ed9e612..521afeb 100644
+index 8041226e4650..88b52da0856e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -84,7 +84,8 @@ GOPKGBASEDIR := $(shell dirname "$(GOPKGDIR)")
- # Update VPATH so make finds .gopathok
- VPATH := $(VPATH):$(GOPATH)
- SHRINKFLAGS := -s -w
--BASE_LDFLAGS = ${SHRINKFLAGS} -X main.gitCommit=${GIT_COMMIT} -X main.buildInfo=${SOURCE_DATE_EPOCH}
-+BASE_LDFLAGS = ${SHRINKFLAGS} -X main.gitCommit=${GIT_COMMIT} -X github.com/cri-o/cri-o/internal/pkg/criocli.DefaultsPath=/usr/share/defaults/crio
-+
- LDFLAGS = -ldflags '${BASE_LDFLAGS}'
+@@ -103,7 +103,8 @@ BASE_LDFLAGS = ${SHRINKFLAGS} \
+ 	-X ${PROJECT}/internal/pkg/criocli.DefaultsPath=${DEFAULTS_PATH} \
+ 	-X ${PROJECT}/internal/version.buildDate=${BUILD_DATE} \
+ 	-X ${PROJECT}/internal/version.gitCommit=${COMMIT_NO} \
+-	-X ${PROJECT}/internal/version.gitTreeState=${GIT_TREE_STATE}
++	-X ${PROJECT}/internal/version.gitTreeState=${GIT_TREE_STATE} \
++	-X ${PROJECT}/internal/pkg/criocli.DefaultsPath=/usr/share/defaults/crio
  
- TESTIMAGE_VERSION := master-1.1.4
+ GO_LDFLAGS = -ldflags '${BASE_LDFLAGS} ${EXTRA_LDFLAGS}'
+ 
+-- 
+2.29.2
+
