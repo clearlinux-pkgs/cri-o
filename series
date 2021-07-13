@@ -2,4 +2,3 @@
 0002-Add-bin-subfolder.patch
 0003-add-default-signature-verification-policy-file.patch
 0004-use-CONF_OVERRIDES-command-line-instead-of-sed-to-se.patch
-0005-pinns-enable-static-PIE-linkage.patch

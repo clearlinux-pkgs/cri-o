@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.19.1
-Release  : 92
+Release  : 93
 URL      : https://github.com/cri-o/cri-o/archive/v1.19.1.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.19.1.tar.gz
 Source1  : cri-o.tmpfiles
@@ -34,7 +34,6 @@ Patch1: 0001-Makefile-Set-DefaultsPath-for-stateless.patch
 Patch2: 0002-Add-bin-subfolder.patch
 Patch3: 0003-add-default-signature-verification-policy-file.patch
 Patch4: 0004-use-CONF_OVERRIDES-command-line-instead-of-sed-to-se.patch
-Patch5: 0005-pinns-enable-static-PIE-linkage.patch
 
 %description
 Builds Dockerfile using the Docker client
@@ -98,14 +97,13 @@ cd %{_builddir}/cri-o-1.19.1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1624578910
+export SOURCE_DATE_EPOCH=1626200339
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -123,12 +121,11 @@ CONF_OVERRIDES=" \
 --seccomp-profile=/usr/share/defaults/crio/seccomp.json \
 --signature-policy=/usr/share/defaults/crio/policy.json \
 --storage-driver=overlay \
-" \
-GOFLAGS="-buildmode=pie -v"
+"
 
 
 %install
-export SOURCE_DATE_EPOCH=1624578910
+export SOURCE_DATE_EPOCH=1626200339
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-1.19.1/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
