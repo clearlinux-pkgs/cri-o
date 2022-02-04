@@ -4,7 +4,6 @@ CONF_OVERRIDES="
  --cni-plugin-dir=/opt/cni/bin
  --cni-plugin-dir=/usr/libexec/cni
  --conmon=/usr/libexec/podman/conmon
- --manage-ns-lifecycle=true
  --registry=docker.io
  --runtimes=clearlinux-kata:/usr/bin/kata-runtime:
  --seccomp-profile=/usr/share/defaults/crio/seccomp.json
