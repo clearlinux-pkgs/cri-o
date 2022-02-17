@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.21.4
-Release  : 104
+Release  : 109
 URL      : https://github.com/cri-o/cri-o/archive/refs/tags/v1.21.4.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/refs/tags/v1.21.4.tar.gz
 Source1  : cri-o.tmpfiles
@@ -31,7 +31,8 @@ BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libseccomp)
 Patch1: 0001-Makefile-Set-DefaultsPath-for-stateless.patch
 Patch2: 0002-Add-bin-subfolder.patch
-Patch3: 0003-add-default-signature-verification-policy-file.patch
+Patch3: 0003-add-default-signature-verification-policy-file-and-r.patch
+Patch4: 0004-Make-stateless.patch
 
 %description
 Builds Dockerfile using the Docker client
@@ -94,13 +95,14 @@ cd %{_builddir}/cri-o-1.21.4
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1644017858
+export SOURCE_DATE_EPOCH=1645135896
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -121,7 +123,7 @@ CONF_OVERRIDES=" \
 
 
 %install
-export SOURCE_DATE_EPOCH=1644017858
+export SOURCE_DATE_EPOCH=1645135896
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-1.21.4/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
@@ -369,6 +371,7 @@ install -D -m 644 crio.conf %{buildroot}/usr/share/defaults/crio/crio.conf
 install -D -m 644 ./vendor/github.com/containers/common/pkg/seccomp/seccomp.json %{buildroot}/usr/share/defaults/crio/seccomp.json
 install -D -m 644 crio-umount.conf %{buildroot}/usr/share/defaults/crio/crio-umount.conf
 install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
+install -D -m 644 registries.conf %{buildroot}/usr/share/defaults/crio/registries.conf
 ## install_append end
 
 %files
@@ -391,6 +394,7 @@ install -D -m 644 policy.json %{buildroot}/usr/share/defaults/crio/policy.json
 /usr/share/defaults/crio/crio-umount.conf
 /usr/share/defaults/crio/crio.conf
 /usr/share/defaults/crio/policy.json
+/usr/share/defaults/crio/registries.conf
 /usr/share/defaults/crio/seccomp.json
 /usr/share/fish/completions/crio-status.fish
 /usr/share/fish/completions/crio.fish

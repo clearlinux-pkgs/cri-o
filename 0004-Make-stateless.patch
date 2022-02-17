@@ -1,0 +1,42 @@
+From 7431e5a84d61bd0607a015f96991bdcfdae6d448 Mon Sep 17 00:00:00 2001
+From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
+Date: Thu, 17 Feb 2022 12:18:18 -0800
+Subject: [PATCH 4/4] Make stateless
+
+Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
+---
+ Makefile         | 3 +++
+ cmd/crio/main.go | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 5dea5a5..2e35d86 100644
+--- a/Makefile
++++ b/Makefile
+@@ -97,6 +97,9 @@ else
+     BUILD_DATE ?= $(shell date -u "$(DATE_FMT)")
+ endif
+ 
++#	-X github.com/containers/image/v5/sysregistries.systemRegistriesConfPath=/usr/share/defaults/crio/registries.conf \
++#	-X github.com/containers/image/v5/sysregistries.systemRegistriesConfDirectoryPath=/usr/share/defaults/crio
++
+ BASE_LDFLAGS = ${SHRINKFLAGS} \
+ 	-X ${PROJECT}/internal/pkg/criocli.DefaultsPath=${DEFAULTS_PATH} \
+ 	-X ${PROJECT}/internal/version.buildDate=${BUILD_DATE} \
+diff --git a/cmd/crio/main.go b/cmd/crio/main.go
+index fda0091..eae6f16 100644
+--- a/cmd/crio/main.go
++++ b/cmd/crio/main.go
+@@ -209,6 +209,9 @@ func main() {
+ 			return err
+ 		}
+ 
++		// Override the registry config file
++		config.SystemContext.SystemRegistriesConfPath = "/usr/share/defaults/crio/registries.conf"
++
+ 		lis, err := server.Listen("unix", config.Listen)
+ 		if err != nil {
+ 			logrus.Fatalf("Failed to listen: %v", err)
+-- 
+2.35.1
+

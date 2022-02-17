@@ -1,3 +1,4 @@
 0001-Makefile-Set-DefaultsPath-for-stateless.patch
 0002-Add-bin-subfolder.patch
-0003-add-default-signature-verification-policy-file.patch
+0003-add-default-signature-verification-policy-file-and-r.patch
+0004-Make-stateless.patch
