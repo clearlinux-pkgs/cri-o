@@ -1,0 +1,27 @@
+From 01aa9299f74ced48d897d3630def9961d92e06e6 Mon Sep 17 00:00:00 2001
+From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
+Date: Mon, 29 Aug 2022 12:08:17 -0700
+Subject: [PATCH 3/3] Make stateless
+
+Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
+---
+ cmd/crio/main.go | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/cmd/crio/main.go b/cmd/crio/main.go
+index 5bb00d3c..d135226b 100644
+--- a/cmd/crio/main.go
++++ b/cmd/crio/main.go
+@@ -258,6 +258,9 @@ func main() {
+ 			return err
+ 		}
+ 
++		// Override the registry config file
++		config.SystemContext.SystemRegistriesConfPath = "/usr/share/defaults/crio/registries.conf"
++
+ 		lis, err := server.Listen("unix", config.Listen)
+ 		if err != nil {
+ 			logrus.Fatalf("Failed to listen: %v", err)
+-- 
+2.37.2
+

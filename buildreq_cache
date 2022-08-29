@@ -1,2 +1,2 @@
-1.24.2
-gpgme-dev
+1.25.0
+pkgconfig(gpgme)
