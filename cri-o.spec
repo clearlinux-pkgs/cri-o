@@ -4,7 +4,7 @@
 #
 Name     : cri-o
 Version  : 1.25.0
-Release  : 118
+Release  : 119
 URL      : https://github.com/cri-o/cri-o/archive/refs/tags/v1.25.0.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/refs/tags/v1.25.0.tar.gz
 Source1  : cri-o.tmpfiles
@@ -101,7 +101,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1661800492
+export SOURCE_DATE_EPOCH=1663101859
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -122,7 +122,7 @@ CONF_OVERRIDES=" \
 
 
 %install
-export SOURCE_DATE_EPOCH=1661800492
+export SOURCE_DATE_EPOCH=1663101859
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cri-o
 cp %{_builddir}/cri-o-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
@@ -151,6 +151,7 @@ cp %{_builddir}/cri-o-%{version}/vendor/github.com/BurntSushi/toml/COPYING %{bui
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/Masterminds/semver/v3/LICENSE.txt %{buildroot}/usr/share/package-licenses/cri-o/020acfcf6d6bd6d701d19bd16f49d0bf18441779
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/Microsoft/go-winio/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/11a8fec351554e8f6c3f4dac5a1f4049dd467ba8
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/Microsoft/hcsshim/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/56b820712432e458f05f883566ca8cd85dcdaad5
+cp %{_builddir}/cri-o-%{version}/vendor/github.com/OneOfOne/xxhash/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/6c26d678ef06ffdac7a65b3683a63e7e097ff536
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/PaesslerAG/gval/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/f46e730f5524c5c2842bee41e68b761434dea2bd
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/PaesslerAG/jsonpath/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/f46e730f5524c5c2842bee41e68b761434dea2bd
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/ProtonMail/go-crypto/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/d6a5f1ecaedd723c325a2063375b3517e808a2b5
@@ -467,7 +468,6 @@ cp %{_builddir}/cri-o-%{version}/vendor/github.com/vbauerster/mpb/v7/UNLICENSE %
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/vishvananda/netlink/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/f88291c879c4ee329bfa341b54eaedd29d3058cf
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/vishvananda/netns/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/f88291c879c4ee329bfa341b54eaedd29d3058cf
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/xanzy/go-gitlab/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/92170cdc034b2ff819323ff670d3b7266c8bffcd
-cp %{_builddir}/cri-o-%{version}/vendor/github.com/xanzy/go-gitlab/license.go %{buildroot}/usr/share/package-licenses/cri-o/3b66ec3a4551414fe6d238711d7f7a4967df608f
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/xanzy/go-gitlab/license_templates.go %{buildroot}/usr/share/package-licenses/cri-o/35469cfbdb2375da57c84e544c0419e6eb8ebdfe
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/xanzy/ssh-agent/LICENSE %{buildroot}/usr/share/package-licenses/cri-o/669a1e53b9dd9df3474300d3d959bb85bad75945
 cp %{_builddir}/cri-o-%{version}/vendor/github.com/xeipuuv/gojsonpointer/LICENSE-APACHE-2.0.txt %{buildroot}/usr/share/package-licenses/cri-o/b7173385030ef97bce57b5b4b78b48763c83aed3
@@ -685,7 +685,6 @@ install -D -m 644 registries.conf %{buildroot}/usr/share/defaults/crio/registrie
 /usr/share/package-licenses/cri-o/376caa2cd54c4196280157d071524614350e7ce8
 /usr/share/package-licenses/cri-o/37a5e9e1835e9b179f9d7175f25c3349d47b76f8
 /usr/share/package-licenses/cri-o/394222bf91bccecfbb28001b46c47e54761a1931
-/usr/share/package-licenses/cri-o/3b66ec3a4551414fe6d238711d7f7a4967df608f
 /usr/share/package-licenses/cri-o/3faf341fbc32621fe1ac089ae2ab7a23980fc189
 /usr/share/package-licenses/cri-o/4052101a660a7d8343c13ada130123f75f1dd408
 /usr/share/package-licenses/cri-o/40759db9edbb7fe30b64cc213f4f20c4618e2932
@@ -736,6 +735,7 @@ install -D -m 644 registries.conf %{buildroot}/usr/share/defaults/crio/registrie
 /usr/share/package-licenses/cri-o/669a1e53b9dd9df3474300d3d959bb85bad75945
 /usr/share/package-licenses/cri-o/66a9502ecba0bae239ca6ba2c3e8a2fe5558a893
 /usr/share/package-licenses/cri-o/66c5c002958b1f31f74410b353972d622d74e007
+/usr/share/package-licenses/cri-o/6c26d678ef06ffdac7a65b3683a63e7e097ff536
 /usr/share/package-licenses/cri-o/6c51f59590222932ec338ecc2f82da24eaaabf0d
 /usr/share/package-licenses/cri-o/6ced7c82afe74251896ff875ff8b07b1148159e8
 /usr/share/package-licenses/cri-o/6deb0a325494947c5e2054069afc39bcae7d804b

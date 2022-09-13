@@ -1,12 +1,13 @@
-From 01aa9299f74ced48d897d3630def9961d92e06e6 Mon Sep 17 00:00:00 2001
+From d48ee10f8a42ff621fb171d2457ecf0dd94a81e1 Mon Sep 17 00:00:00 2001
 From: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 Date: Mon, 29 Aug 2022 12:08:17 -0700
 Subject: [PATCH 3/3] Make stateless
 
 Signed-off-by: Ganesh Maharaj Mahalingam <ganesh.mahalingam@intel.com>
 ---
- cmd/crio/main.go | 3 +++
- 1 file changed, 3 insertions(+)
+ cmd/crio/main.go          | 3 +++
+ pkg/config/config_unix.go | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/cmd/crio/main.go b/cmd/crio/main.go
 index 5bb00d3c..d135226b 100644
@@ -22,6 +23,19 @@ index 5bb00d3c..d135226b 100644
  		lis, err := server.Listen("unix", config.Listen)
  		if err != nil {
  			logrus.Fatalf("Failed to listen: %v", err)
+diff --git a/pkg/config/config_unix.go b/pkg/config/config_unix.go
+index 15609850..1231f8ca 100644
+--- a/pkg/config/config_unix.go
++++ b/pkg/config/config_unix.go
+@@ -11,7 +11,7 @@ const (
+ 	ContainerAttachSocketDir = "/var/run/crio"
+ 
+ 	// CrioConfigPath is the default location for the conf file
+-	CrioConfigPath = "/etc/crio/crio.conf"
++	CrioConfigPath = "/usr/share/defaults/crio/crio.conf"
+ 
+ 	// CrioConfigDropInPath is the default location for the drop-in config files
+ 	CrioConfigDropInPath = "/etc/crio/crio.conf.d"
 -- 
-2.37.2
+2.37.3
 
