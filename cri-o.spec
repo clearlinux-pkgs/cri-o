@@ -5,7 +5,7 @@
 #
 Name     : cri-o
 Version  : 1.26.3
-Release  : 129
+Release  : 130
 URL      : https://github.com/cri-o/cri-o/archive/v1.26.3/cri-o-1.26.3.tar.gz
 Source0  : https://github.com/cri-o/cri-o/archive/v1.26.3/cri-o-1.26.3.tar.gz
 Source1  : cri-o.tmpfiles
