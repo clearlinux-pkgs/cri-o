@@ -1,0 +1,65 @@
+From 0447df64535ed873880f3fde1c433e74ed61d377 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Thu, 9 Jan 2025 11:54:56 -0800
+Subject: [PATCH 1/2] Setup crio.conf for stateless
+
+Also configure a stateless SystemRegistriesConfPath by default.
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ Makefile                  | 3 ++-
+ cmd/crio/main.go          | 3 +++
+ pkg/config/config_unix.go | 2 +-
+ 3 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 35e93e6..bf0d9e8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,6 +14,7 @@ LIBEXECDIR ?= ${PREFIX}/libexec
+ MANDIR ?= ${PREFIX}/share/man
+ ETCDIR ?= ${DESTDIR}/etc
+ ETCDIR_CRIO ?= ${ETCDIR}/crio
++DEFAULTDIR_CRIO ?= ${DESTDIR}/usr/share/defaults/crio
+ DATAROOTDIR ?= ${PREFIX}/share/containers
+ BUILDTAGS ?= containers_image_ostree_stub \
+ 			 $(shell hack/apparmor_tag.sh) \
+@@ -279,7 +280,7 @@ install.man: $(MANPAGES) install.man-nobuild ## Build and install the man pages.
+ install.config-nobuild: ## Install the configuration files.
+ 	install ${SELINUXOPT} -d $(DATAROOTDIR)/oci/hooks.d
+ 	install ${SELINUXOPT} -d $(ETCDIR_CRIO)/crio.conf.d
+-	install ${SELINUXOPT} -D -m 644 crio.conf $(ETCDIR_CRIO)/crio.conf
++	install ${SELINUXOPT} -D -m 644 crio.conf $(DEFAULTDIR_CRIO)/crio.conf
+ 	install ${SELINUXOPT} -D -m 644 crio-umount.conf $(OCIUMOUNTINSTALLDIR)/crio-umount.conf
+ 	install ${SELINUXOPT} -D -m 644 crictl.yaml $(CRICTL_CONFIG_DIR)
+ 
+diff --git a/cmd/crio/main.go b/cmd/crio/main.go
+index 154662c..9d1eaba 100644
+--- a/cmd/crio/main.go
++++ b/cmd/crio/main.go
+@@ -294,6 +294,9 @@ func main() {
+ 			logrus.Infof("Current CRI-O configuration:\n%s", tomlConfig)
+ 		}
+ 
++		// Override the registry config file
++		config.SystemContext.SystemRegistriesConfPath = "/usr/share/defaults/crio/registries.conf"
++
+ 		lis, err := server.Listen("unix", config.Listen)
+ 		if err != nil {
+ 			logrus.Fatalf("Failed to listen: %v", err)
+diff --git a/pkg/config/config_unix.go b/pkg/config/config_unix.go
+index 91a6a57..5d593ec 100644
+--- a/pkg/config/config_unix.go
++++ b/pkg/config/config_unix.go
+@@ -10,7 +10,7 @@ const (
+ 	ContainerAttachSocketDir = "/var/run/crio"
+ 
+ 	// CrioConfigPath is the default location for the conf file.
+-	CrioConfigPath = "/etc/crio/crio.conf"
++	CrioConfigPath = "/usr/share/defaults/crio/crio.conf"
+ 
+ 	// CrioConfigDropInPath is the default location for the drop-in config files.
+ 	CrioConfigDropInPath = "/etc/crio/crio.conf.d"
+-- 
+2.47.1
+

@@ -1,7 +1,7 @@
-From 20081c587b0f4e15609ce705d0971f7267a9088b Mon Sep 17 00:00:00 2001
+From 15c7a38af3d6c157cd8db07043de274cdf97648f Mon Sep 17 00:00:00 2001
 From: Jose Lamego <jose.a.lamego@intel.com>
 Date: Thu, 23 Aug 2018 11:47:30 -0500
-Subject: [PATCH 2/3] add default signature verification policy file and
+Subject: [PATCH 2/2] add default signature verification policy file and
  registries conf
 
 This commit creates a default signature verification policy file
@@ -19,7 +19,7 @@ Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
 
 diff --git a/policy.json b/policy.json
 new file mode 100644
-index 00000000..fc643c80
+index 0000000..fc643c8
 --- /dev/null
 +++ b/policy.json
 @@ -0,0 +1,11 @@
@@ -36,11 +36,11 @@ index 00000000..fc643c80
 +}
 diff --git a/registries.conf b/registries.conf
 new file mode 100644
-index 00000000..0b929dac
+index 0000000..c2760f2
 --- /dev/null
 +++ b/registries.conf
 @@ -0,0 +1 @@
-+unqualified-search-registries = ['quay.io' ,'registry.access.redhat.com', 'registry.fedoraproject.org', 'docker.io']
++unqualified-search-registries = ['quay.io' ,'registry.access.redhat.com', 'registry.fedoraproject.org', 'ghrc.io', 'docker.io']
 -- 
-2.37.2
+2.47.1
 

@@ -1,3 +1,2 @@
-0001-Makefile-Set-DefaultsPath-for-stateless.patch
+0001-Setup-crio.conf-for-stateless.patch
 0002-add-default-signature-verification-policy-file-and-r.patch
-0003-Make-stateless.patch
